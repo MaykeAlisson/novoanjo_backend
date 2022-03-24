@@ -10,7 +10,7 @@ Api que tem como objetivo ajudar pessoas, seja com alimentos, prestação de ser
   * Actuator
 * Maven
 * Swagger (Api Docs)
-* Postgress
+* Postgres
 * Flyway
 * Lombok
 * Docker
@@ -22,7 +22,9 @@ Api que tem como objetivo ajudar pessoas, seja com alimentos, prestação de ser
 
 ### Como rodar localmente
 
-NovoAnjoApi: http://localhost:8080/
-Swagger: http://localhost:8080/swagger-ui.html
+docker-compose up -d /devops/local_env/
 
 ### Endereços LOCAL
+
+    NovoAnjoApi: http://localhost:8080/
+    Swagger: http://localhost:8080/swagger-ui.html
