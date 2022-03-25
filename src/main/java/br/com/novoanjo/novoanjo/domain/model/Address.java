@@ -22,9 +22,17 @@ public class Address implements Serializable {
 
     @Column(name = "zip_code", nullable = false, length = 3)
     private String zipCode;
+
+    @Column(name = "logradouro", nullable = false, length = 130)
     private String logradouro;
+
+    @Column(name = "complement", nullable = true, length = 50)
     private String complement;
+
+    @Column(name = "number", nullable = false)
     private Long number;
+
+    @Column(name = "state", nullable = false, length = 2)
     private String state;
 
 }
