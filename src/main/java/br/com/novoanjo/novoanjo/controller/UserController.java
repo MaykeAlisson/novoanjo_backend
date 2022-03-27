@@ -1,8 +1,10 @@
 package br.com.novoanjo.novoanjo.controller;
 
-import br.com.novoanjo.novoanjo.domain.dto.UserRequestDto;
-import br.com.novoanjo.novoanjo.domain.dto.UsuarioAccessDto;
-import br.com.novoanjo.novoanjo.domain.model.User;
+import br.com.novoanjo.novoanjo.commons.dto.UserRequestDto;
+import br.com.novoanjo.novoanjo.commons.dto.UserAccessDto;
+import br.com.novoanjo.novoanjo.domain.User;
+import br.com.novoanjo.novoanjo.service.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,18 +19,15 @@ import java.net.URI;
 @RequestMapping(value = "/api/user")
 public class UserController {
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "/v1/user", method = RequestMethod.POST)
-    public ResponseEntity<UsuarioAccessDto> create(@RequestBody @Valid final UserRequestDto obj) {
+    public ResponseEntity<UserAccessDto> create(@RequestBody @Valid final UserRequestDto obj) {
 
-        final User user = userService.insert(obj);
+        final UserAccessDto user = userService.createUser(obj);
 
-        final String token = Token.gerar(user.getId(), 1L)
-                .orElseThrow(() -> new BussinesException("Erro ao Gerar token!"));
-        final UsuarioAccessDto usuarioAccessDto = new UsuarioAccessDto.Builder()
-                .comIdUser(user.getId())
-                .comNome(user.getNome())
-                .comToken(token)
-                .build();
+
 
         final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).body(usuarioAcessoDto);

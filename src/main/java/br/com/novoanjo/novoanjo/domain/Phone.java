@@ -1,6 +1,5 @@
-package br.com.novoanjo.novoanjo.domain.model;
+package br.com.novoanjo.novoanjo.domain;
 
-import br.com.novoanjo.novoanjo.constant.ServiceName;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,8 +11,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "service")
-public class Service implements Serializable {
+@Table(name = "phone")
+public class Phone implements Serializable {
 
     @EqualsAndHashCode.Include
     @Id
@@ -21,6 +20,10 @@ public class Service implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "description", nullable = false, length = 100)
-    private ServiceName serviceName;
+    @Column(name = "ddd", nullable = false)
+    private Short ddd;
+
+    @Column(name = "number", nullable = false)
+    private Long number;
+
 }

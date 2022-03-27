@@ -1,5 +1,6 @@
-package br.com.novoanjo.novoanjo.domain.model;
+package br.com.novoanjo.novoanjo.domain;
 
+import br.com.novoanjo.novoanjo.commons.constant.ProfileName;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,8 +12,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "phone")
-public class Phone implements Serializable {
+@Table(name = "profile")
+public class Profile implements Serializable {
 
     @EqualsAndHashCode.Include
     @Id
@@ -20,10 +21,6 @@ public class Phone implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "ddd", nullable = false)
-    private Short ddd;
-
-    @Column(name = "number", nullable = false)
-    private Long number;
-
+    @Column(name = "name", nullable = false, length = 1)
+    private ProfileName profileName;
 }

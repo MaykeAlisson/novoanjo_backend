@@ -1,4 +1,4 @@
-package br.com.novoanjo.novoanjo.domain.model;
+package br.com.novoanjo.novoanjo.domain;
 
 import lombok.*;
 
