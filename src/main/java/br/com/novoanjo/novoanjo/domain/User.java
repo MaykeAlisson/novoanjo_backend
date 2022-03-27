@@ -1,5 +1,6 @@
 package br.com.novoanjo.novoanjo.domain;
 
+import br.com.novoanjo.novoanjo.commons.dto.UserRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -41,4 +42,12 @@ public class User implements Serializable {
 
 
     private Address address;
+
+
+    public static User convert(final UserRequestDto userRequest){
+
+        return User.builder()
+                .name("")
+                .build()
+    }
 }
