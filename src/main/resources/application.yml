@@ -1,1 +1,14 @@
+spring:
+  application:
+    name: novoanjo
+    time-zone: America/Sao_Paulo
+  datasource:
+    url: jdbc:postgresql://localhost:5432/novoanjo
+    username: novoanjo
+    password: jesus
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  jpa:
+    show-sql: false
+    format-sql: false
 

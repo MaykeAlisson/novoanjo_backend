@@ -2,10 +2,12 @@ package br.com.novoanjo.novoanjo.domain;
 
 import br.com.novoanjo.novoanjo.commons.constant.Approved;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @Builder
@@ -39,4 +41,8 @@ public class Event implements Serializable {
 
     @Column(name = "address_id")
     private Address address;
+
+    @CreationTimestamp
+    @Column(name = "data_cadastro", nullable = false, columnDefinition = "datetime")
+    private OffsetDateTime dataCadastro;
 }

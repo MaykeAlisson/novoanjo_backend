@@ -1,5 +1,6 @@
 package br.com.novoanjo.novoanjo.domain;
 
+import br.com.novoanjo.novoanjo.commons.dto.PhoneRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,5 +26,13 @@ public class Phone implements Serializable {
 
     @Column(name = "number", nullable = false)
     private Long number;
+
+
+    public static Phone convertToPhone(final PhoneRequestDto phoneRequest){
+        return Phone.builder()
+                .ddd(phoneRequest.getDdd())
+                .number(phoneRequest.getNumber())
+                .build();
+    }
 
 }

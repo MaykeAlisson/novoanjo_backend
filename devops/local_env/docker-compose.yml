@@ -6,6 +6,7 @@ services:
     container_name: db_novoanjo
     restart: always
     environment:
+      POSTGRES_USERNAME: root
       POSTGRES_PASSWORD: jesus
       POSTGRES_DB: novoanjo
     ports:

@@ -13,6 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class UserAccessDto implements Serializable {
 
+    private Long id;
     private String name;
     private String profile;
     private String token;

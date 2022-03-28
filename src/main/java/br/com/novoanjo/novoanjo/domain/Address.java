@@ -1,5 +1,6 @@
 package br.com.novoanjo.novoanjo.domain;
 
+import br.com.novoanjo.novoanjo.commons.dto.AddressRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,5 +35,15 @@ public class Address implements Serializable {
 
     @Column(name = "state", nullable = false, length = 2)
     private String state;
+
+    public static Address convertToAddress(final AddressRequestDto addressRequest){
+        return Address.builder()
+                .zipCode(addressRequest.getZipCode())
+                .logradouro(addressRequest.getLogradouro())
+                .complement(addressRequest.getComplement())
+                .number(addressRequest.getNumber())
+                .state(addressRequest.getState())
+                .build();
+    }
 
 }
