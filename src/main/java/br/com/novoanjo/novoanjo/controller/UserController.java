@@ -1,8 +1,7 @@
 package br.com.novoanjo.novoanjo.controller;
 
-import br.com.novoanjo.novoanjo.commons.dto.UserRequestDto;
 import br.com.novoanjo.novoanjo.commons.dto.UserAccessDto;
-import br.com.novoanjo.novoanjo.domain.User;
+import br.com.novoanjo.novoanjo.commons.dto.UserRequestDto;
 import br.com.novoanjo.novoanjo.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +26,8 @@ public class UserController {
 
         final UserAccessDto user = userService.createUser(obj);
 
-
-
         final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).body(usuarioAcessoDto);
+        return ResponseEntity.created(uri).body(user);
 
     }
 }
