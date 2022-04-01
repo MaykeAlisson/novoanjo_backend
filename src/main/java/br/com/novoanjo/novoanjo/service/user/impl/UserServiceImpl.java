@@ -10,9 +10,11 @@ import br.com.novoanjo.novoanjo.service.user.UserService;
 import br.com.novoanjo.novoanjo.util.exception.BussinesException;
 import br.com.novoanjo.novoanjo.util.jwt.Token;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import static br.com.novoanjo.novoanjo.domain.User.convertToUser;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired

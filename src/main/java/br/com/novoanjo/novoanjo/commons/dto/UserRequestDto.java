@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,7 +21,7 @@ public class UserRequestDto implements Serializable {
     private String name;
 
     @NotNull
-    private LocalDateTime birth;
+    private LocalDate birth;
 
     @NotNull
     private String email;

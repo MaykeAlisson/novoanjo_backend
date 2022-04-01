@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
@@ -35,7 +36,7 @@ public class User implements Serializable {
     private String name;
 
     @Column(name = "birth", nullable = false)
-    private LocalDateTime birth;
+    private LocalDate birth;
 
     @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
@@ -70,7 +71,8 @@ public class User implements Serializable {
                 .name(userRequest.getName())
                 .birth(userRequest.getBirth())
                 .email(userRequest.getEmail())
-                .password(encriptar(userRequest.getPassword()))
+//                .password(encriptar(userRequest.getPassword()))
+                .password(userRequest.getPassword())
                 .profile(profile)
                 .phone(convertToPhone(userRequest.getPhone()))
                 .address(convertToAddress(userRequest.getAddress()))
