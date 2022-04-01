@@ -22,7 +22,7 @@ import static br.com.novoanjo.novoanjo.util.UtilCrypto.encriptar;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "user")
+@Table(name = "usuario")
 public class User implements Serializable {
 
     @EqualsAndHashCode.Include
@@ -31,10 +31,10 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "zip_code", nullable = false, length = 3)
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "zip_code", nullable = false, length = 3)
+    @Column(name = "birth", nullable = false)
     private LocalDateTime birth;
 
     @Column(name = "email", nullable = false, length = 100, unique = true)
