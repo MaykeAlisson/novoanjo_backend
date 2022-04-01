@@ -20,7 +20,6 @@ public class AddressRequestDto implements Serializable {
     @NotNull
     private String logradouro;
 
-    @NotNull
     private String complement;
 
     @NotNull
