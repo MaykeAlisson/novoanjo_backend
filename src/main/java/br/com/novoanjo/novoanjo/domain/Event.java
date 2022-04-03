@@ -1,6 +1,6 @@
 package br.com.novoanjo.novoanjo.domain;
 
-import br.com.novoanjo.novoanjo.commons.constant.Approved;
+import br.com.novoanjo.novoanjo.commons.constante.Approved;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

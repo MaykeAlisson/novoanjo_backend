@@ -1,5 +1,6 @@
 package br.com.novoanjo.novoanjo.service.user.impl;
 
+import br.com.novoanjo.novoanjo.commons.constante.ProfileName;
 import br.com.novoanjo.novoanjo.commons.dto.UserAccessDto;
 import br.com.novoanjo.novoanjo.commons.dto.UserRequestDto;
 import br.com.novoanjo.novoanjo.domain.Profile;
@@ -25,6 +26,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserAccessDto createUser(final UserRequestDto userRequest) {
+
+        ProfileName profileName = userRequest.getProfileName();
 
         Profile profile = profileRepository.findByProfileName(userRequest.getProfileName())
                 .orElseThrow(() -> new BussinesException("erro")); // todo mudar para notfound

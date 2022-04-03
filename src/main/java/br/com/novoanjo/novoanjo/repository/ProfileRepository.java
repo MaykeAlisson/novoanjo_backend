@@ -1,6 +1,6 @@
 package br.com.novoanjo.novoanjo.repository;
 
-import br.com.novoanjo.novoanjo.commons.constant.ProfileName;
+import br.com.novoanjo.novoanjo.commons.constante.ProfileName;
 import br.com.novoanjo.novoanjo.domain.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 

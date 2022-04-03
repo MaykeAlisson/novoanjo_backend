@@ -8,7 +8,7 @@ spring:
     password: jesus
     driver-class-name: org.postgresql.Driver
   jpa:
-    show-sql: false
-    format-sql: false
+    show-sql: true
+    format-sql: true
     open-in-view: false
 

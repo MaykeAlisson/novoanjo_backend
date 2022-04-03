@@ -1,6 +1,8 @@
 package br.com.novoanjo.novoanjo.commons.dto;
 
-import br.com.novoanjo.novoanjo.commons.constant.ProfileName;
+import br.com.novoanjo.novoanjo.commons.constante.ProfileName;
+import br.com.novoanjo.novoanjo.commons.json.ProfileNameDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +11,6 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -30,6 +31,7 @@ public class UserRequestDto implements Serializable {
     private String password;
 
     @NotNull
+    @JsonDeserialize(using = ProfileNameDeserializer.class)
     private ProfileName profileName;
 
     @NotNull
