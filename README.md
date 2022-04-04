@@ -10,7 +10,7 @@ Api que tem como objetivo ajudar pessoas, seja com alimentos, prestação de ser
   * Actuator
 * Maven
 * Swagger (Api Docs)
-* Postgres
+* Mysql
 * Flyway
 * Lombok
 * Docker
