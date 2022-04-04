@@ -18,7 +18,7 @@ public class Phone implements Serializable {
     @EqualsAndHashCode.Include
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "ddd", nullable = false)

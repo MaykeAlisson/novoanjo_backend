@@ -1,14 +1,17 @@
 version: '3.1'
 
 services:
-  postgres:
-    image: postgres:12-alpine
+  mysqldb:
+    image: mysql
     container_name: db_novoanjo
+    restart: always
     environment:
-      POSTGRES_PASSWORD: jesus
-      POSTGRES_DB: novoanjo
+      MYSQL_ROOT_PASSWORD: jesus
+      MYSQL_DATABASE: novoanjo
     ports:
-      - "5432:5432"
+      - "3306:3306"
+    volumes:
+      - /home/mayke/develop/docker/volumes/mysql:/var/lib/mysql
     networks:
       - novoanjo-network
 

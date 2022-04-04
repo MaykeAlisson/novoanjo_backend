@@ -3,12 +3,12 @@ spring:
     name: novoanjo
     time-zone: America/Sao_Paulo
   datasource:
-    url: jdbc:postgresql://localhost:5432/novoanjo
-    username: postgres
+    url: jdbc:mysql://localhost:3306/novoanjo?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
     password: jesus
-    driver-class-name: org.postgresql.Driver
   jpa:
-    show-sql: true
-    format-sql: true
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    format-sql: false
     open-in-view: false
 

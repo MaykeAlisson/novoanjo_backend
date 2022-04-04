@@ -18,7 +18,7 @@ public class Service implements Serializable {
     @EqualsAndHashCode.Include
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "description", nullable = false, length = 100)

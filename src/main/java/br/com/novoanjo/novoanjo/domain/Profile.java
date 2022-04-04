@@ -21,6 +21,6 @@ public class Profile implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, columnDefinition = "text")
+    @Column(name = "name", nullable = false, unique = true, columnDefinition = "text")
     private ProfileName profileName;
 }

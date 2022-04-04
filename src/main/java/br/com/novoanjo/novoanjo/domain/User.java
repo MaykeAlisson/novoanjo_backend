@@ -23,13 +23,13 @@ import static br.com.novoanjo.novoanjo.util.UtilCrypto.encriptar;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "usuario")
+@Table(name = "user")
 public class User implements Serializable {
 
     @EqualsAndHashCode.Include
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
