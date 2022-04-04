@@ -1,7 +1,7 @@
-package br.com.novoanjo.novoanjo.util.jwt;
+package br.com.novoanjo.novoanjo.infra.util.jwt;
 
-import br.com.novoanjo.novoanjo.util.UtilDate;
-import br.com.novoanjo.novoanjo.util.exception.BussinesException;
+import br.com.novoanjo.novoanjo.infra.util.UtilDate;
+import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
 import io.jsonwebtoken.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;

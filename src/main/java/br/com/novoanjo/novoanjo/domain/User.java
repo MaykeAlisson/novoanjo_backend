@@ -7,15 +7,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static br.com.novoanjo.novoanjo.domain.Address.convertToAddress;
 import static br.com.novoanjo.novoanjo.domain.Phone.convertToPhone;
-import static br.com.novoanjo.novoanjo.util.UtilCrypto.encriptar;
 
 @Data
 @Builder

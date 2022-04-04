@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -14,10 +15,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class AddressRequestDto implements Serializable {
 
-    @NotNull
+    @NotBlank
     private String zipCode;
 
-    @NotNull
+    @NotBlank
     private String logradouro;
 
     private String complement;
@@ -25,6 +26,6 @@ public class AddressRequestDto implements Serializable {
     @NotNull
     private Long number;
 
-    @NotNull
+    @NotBlank
     private String state;
 }

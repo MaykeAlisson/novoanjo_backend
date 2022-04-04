@@ -1,4 +1,4 @@
-package br.com.novoanjo.novoanjo.util.exception;
+package br.com.novoanjo.novoanjo.infra.exception;
 
 public class BussinesException extends RuntimeException{
     public BussinesException(final String msg) {

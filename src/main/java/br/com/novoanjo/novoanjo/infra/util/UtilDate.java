@@ -1,4 +1,4 @@
-package br.com.novoanjo.novoanjo.util;
+package br.com.novoanjo.novoanjo.infra.util;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

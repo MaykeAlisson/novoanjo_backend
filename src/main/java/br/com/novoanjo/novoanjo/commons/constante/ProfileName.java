@@ -1,6 +1,6 @@
 package br.com.novoanjo.novoanjo.commons.constante;
 
-import br.com.novoanjo.novoanjo.util.model.Constante;
+import br.com.novoanjo.novoanjo.infra.util.model.Constante;
 
 public enum ProfileName implements Constante<String> {
 

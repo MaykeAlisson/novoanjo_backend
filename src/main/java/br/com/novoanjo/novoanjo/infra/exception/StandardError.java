@@ -1,4 +1,4 @@
-package br.com.novoanjo.novoanjo.util.exception;
+package br.com.novoanjo.novoanjo.infra.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

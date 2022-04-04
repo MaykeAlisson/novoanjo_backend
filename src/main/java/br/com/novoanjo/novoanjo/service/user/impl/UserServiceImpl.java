@@ -7,9 +7,9 @@ import br.com.novoanjo.novoanjo.domain.User;
 import br.com.novoanjo.novoanjo.repository.ProfileRepository;
 import br.com.novoanjo.novoanjo.repository.UserRepository;
 import br.com.novoanjo.novoanjo.service.user.UserService;
-import br.com.novoanjo.novoanjo.util.exception.BussinesException;
-import br.com.novoanjo.novoanjo.util.exception.NotFoundException;
-import br.com.novoanjo.novoanjo.util.jwt.Token;
+import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
+import br.com.novoanjo.novoanjo.infra.exception.NotFoundException;
+import br.com.novoanjo.novoanjo.infra.util.jwt.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         return UserAccessDto.builder()
                 .id(user.getId())
                 .name(user.getName())
-                .profile(profile.toString())
+                .profile(profile.getProfileName().getValor())
                 .token(token)
                 .build();
     }

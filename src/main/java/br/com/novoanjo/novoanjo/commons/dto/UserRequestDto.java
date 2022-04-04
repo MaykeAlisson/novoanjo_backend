@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -18,19 +19,19 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class UserRequestDto implements Serializable {
 
-    @NotNull
+    @NotBlank(message = "Name is mandatory")
     private String name;
 
     @NotNull
     private LocalDate birth;
 
-    @NotNull
+    @NotBlank
     private String email;
 
-    @NotNull
+    @NotBlank
     private String password;
 
-    @NotNull
+    @NotNull(message = "profileName is mandatory value[A or S]")
     @JsonDeserialize(using = ProfileNameDeserializer.class)
     private ProfileName profileName;
 

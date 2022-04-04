@@ -1,4 +1,4 @@
-package br.com.novoanjo.novoanjo.util.model;
+package br.com.novoanjo.novoanjo.infra.util.model;
 
 public interface Constante<T> {
     String getDescricao();
