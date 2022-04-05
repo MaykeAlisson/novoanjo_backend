@@ -1,6 +1,6 @@
-package br.com.novoanjo.novoanjo.domain;
+package br.com.novoanjo.novoanjo.domain.model;
 
-import br.com.novoanjo.novoanjo.commons.dto.AddressRequestDto;
+import br.com.novoanjo.novoanjo.domain.commons.dto.AddressRequestDto;
 import lombok.*;
 
 import javax.persistence.*;

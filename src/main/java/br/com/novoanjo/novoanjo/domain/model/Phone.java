@@ -1,6 +1,6 @@
-package br.com.novoanjo.novoanjo.domain;
+package br.com.novoanjo.novoanjo.domain.model;
 
-import br.com.novoanjo.novoanjo.commons.dto.PhoneRequestDto;
+import br.com.novoanjo.novoanjo.domain.commons.dto.PhoneRequestDto;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,6 +1,6 @@
-package br.com.novoanjo.novoanjo.commons.json;
+package br.com.novoanjo.novoanjo.domain.commons.json;
 
-import br.com.novoanjo.novoanjo.commons.constante.ProfileName;
+import br.com.novoanjo.novoanjo.domain.commons.constante.ProfileName;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;

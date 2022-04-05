@@ -1,6 +1,9 @@
-package br.com.novoanjo.novoanjo.commons.constante;
+package br.com.novoanjo.novoanjo.domain.commons.constante;
 
 import br.com.novoanjo.novoanjo.infra.util.model.Constante;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public enum ProfileName implements Constante<String> {
 
@@ -24,5 +27,11 @@ public enum ProfileName implements Constante<String> {
     @Override
     public String getValor() {
         return this.valor;
+    }
+
+    public static Boolean existValue(final String profile){
+       return !Arrays.stream(ProfileName.values())
+               .filter(value -> value.getValor().contains(profile))
+               .collect(Collectors.toSet()).isEmpty();
     }
 }

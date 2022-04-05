@@ -1,8 +1,7 @@
-package br.com.novoanjo.novoanjo.commons.json;
+package br.com.novoanjo.novoanjo.domain.commons.json;
 
-import br.com.novoanjo.novoanjo.commons.constante.ProfileName;
+import br.com.novoanjo.novoanjo.domain.commons.constante.ProfileName;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 

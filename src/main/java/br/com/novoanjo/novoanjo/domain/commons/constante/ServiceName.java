@@ -1,8 +1,8 @@
-package br.com.novoanjo.novoanjo.commons.constante;
+package br.com.novoanjo.novoanjo.domain.commons.constante;
 
 import br.com.novoanjo.novoanjo.infra.util.model.Constante;
 
-public enum Approved implements Constante {
+public enum ServiceName implements Constante {
     ;
 
     @Override

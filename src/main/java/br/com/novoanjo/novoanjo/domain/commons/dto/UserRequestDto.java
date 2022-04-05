@@ -1,7 +1,7 @@
-package br.com.novoanjo.novoanjo.commons.dto;
+package br.com.novoanjo.novoanjo.domain.commons.dto;
 
-import br.com.novoanjo.novoanjo.commons.constante.ProfileName;
-import br.com.novoanjo.novoanjo.commons.json.ProfileNameDeserializer;
+import br.com.novoanjo.novoanjo.domain.commons.constante.ProfileName;
+import br.com.novoanjo.novoanjo.domain.commons.json.ProfileNameDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

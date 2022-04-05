@@ -1,4 +1,4 @@
-package br.com.novoanjo.novoanjo.commons.dto;
+package br.com.novoanjo.novoanjo.domain.commons.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

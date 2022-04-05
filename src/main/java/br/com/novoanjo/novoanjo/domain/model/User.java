@@ -1,7 +1,9 @@
-package br.com.novoanjo.novoanjo.domain;
+package br.com.novoanjo.novoanjo.domain.model;
 
-import br.com.novoanjo.novoanjo.commons.dto.UserRequestDto;
+import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestDto;
+import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestUpdateDto;
 import lombok.*;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -9,10 +11,12 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-import static br.com.novoanjo.novoanjo.domain.Address.convertToAddress;
-import static br.com.novoanjo.novoanjo.domain.Phone.convertToPhone;
+import static br.com.novoanjo.novoanjo.domain.model.Address.convertToAddress;
+import static br.com.novoanjo.novoanjo.domain.model.Phone.convertToPhone;
+import static java.util.Objects.requireNonNullElse;
 
 @Data
 @Builder
@@ -74,5 +78,18 @@ public class User implements Serializable {
                 .phone(convertToPhone(userRequest.getPhone()))
                 .address(convertToAddress(userRequest.getAddress()))
                 .build();
+    }
+
+    public static User convertToUser(final UserRequestUpdateDto userRequest, User user) {
+
+        user.phone.setDdd(requireNonNullElse(userRequest.getDdd(), user.phone.getDdd()));
+        user.phone.setNumber(requireNonNullElse(userRequest.getNumber(), user.phone.getNumber()));
+        user.address.setZipCode(requireNonNullElse(userRequest.getZipCode(), user.address.getZipCode()));
+        user.address.setLogradouro(requireNonNullElse(userRequest.getLogradouro(), user.address.getLogradouro()));
+        user.address.setNumber(requireNonNullElse(userRequest.getNumberAddress(), user.address.getNumber()));
+        user.address.setComplement(requireNonNullElse(userRequest.getComplement(), user.address.getComplement()));
+        user.address.setState(requireNonNullElse(userRequest.getState(), user.address.getState()));
+
+        return user;
     }
 }

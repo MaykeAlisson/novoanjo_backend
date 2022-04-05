@@ -1,4 +1,4 @@
-package br.com.novoanjo.novoanjo.commons.json;
+package br.com.novoanjo.novoanjo.domain.commons.json;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

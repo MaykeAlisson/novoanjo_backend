@@ -1,6 +1,6 @@
-package br.com.novoanjo.novoanjo.domain;
+package br.com.novoanjo.novoanjo.domain.model;
 
-import br.com.novoanjo.novoanjo.commons.constante.ServiceName;
+import br.com.novoanjo.novoanjo.domain.commons.constante.ServiceName;
 import lombok.*;
 
 import javax.persistence.*;

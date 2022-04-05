@@ -23,17 +23,17 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 public class Token implements Serializable {
 
     public static final LocalDateTime JWT_TOKEN_VALIDITY = now().plusHours(3);
-    public static final String SECRET = "javaword";
+    public static final String SECRET = "javaword_novoAnjo";
     public static final Integer SUB_STRING_TOKEN = 7;
     public static final Integer QTD_PARANS_TOKEN = 3;
 
-    private static void checkGerar(final Long idUsuario, final Long idPerfil, final LocalDateTime dataExpiracao) {
+    private static void checkGerar(final Long idUsuario, final String perfil, final LocalDateTime dataExpiracao) {
         StringJoiner check = new StringJoiner(" ");
         if (idUsuario == null) {
             check.add("[ idUsuario ]");
         }
 
-        if (idPerfil == null) {
+        if (perfil == null) {
             check.add("[ idPerfil ]");
         }
 
@@ -46,13 +46,13 @@ public class Token implements Serializable {
         }
     }
 
-    private static void checkGerar(final Long idUsuario, final Long idPerfil) {
+    private static void checkGerar(final Long idUsuario, final String perfil) {
         StringJoiner check = new StringJoiner(" ");
         if (idUsuario == null) {
             check.add("[ idUsuario ]");
         }
 
-        if (idPerfil == null) {
+        if (perfil == null) {
             check.add("[ idPerfil ]");
         }
 
@@ -63,28 +63,28 @@ public class Token implements Serializable {
 
     public static Optional<String> gerar(
             final Long idUsuario,
-            final Long idPerfil,
+            final String perfil,
             final LocalDateTime dataExpiracao
     ) {
-        checkGerar(idUsuario, idPerfil, dataExpiracao);
+        checkGerar(idUsuario, perfil, dataExpiracao);
         return Optional.ofNullable(Jwts.builder()
-                .setSubject(createSubject(idUsuario, idPerfil))
+                .setSubject(createSubject(idUsuario, perfil))
                 .setExpiration(UtilDate.toDate(dataExpiracao))
                 .signWith(SignatureAlgorithm.HS256, SECRET)
                 .compact());
     }
 
-    public static Optional<String> gerar(final Long idUsuario, final Long idPerfil) {
-        checkGerar(idUsuario, idPerfil);
+    public static Optional<String> gerar(final Long idUsuario, final String perfil) {
+        checkGerar(idUsuario, perfil);
         return Optional.ofNullable(Jwts.builder()
-                .setSubject(createSubject(idUsuario, idPerfil))
+                .setSubject(createSubject(idUsuario, perfil))
                 .setExpiration(UtilDate.toDate(JWT_TOKEN_VALIDITY))
                 .signWith(SignatureAlgorithm.HS256, SECRET)
                 .compact());
     }
 
-    private static String createSubject(final Long idUsuario, final Long idPerfil) {
-        return String.format("%s;%s;%s", idUsuario, idPerfil, LocalDate.now());
+    private static String createSubject(final Long idUsuario, final String perfil) {
+        return String.format("%s;%s;%s", idUsuario, perfil, LocalDate.now());
     }
 
     public static Boolean isValid(final String token) {
@@ -113,34 +113,40 @@ public class Token implements Serializable {
         }
     }
 
-    public static String getUserId() {
+    public static Long getUserId() {
         try {
             final HttpServletRequest request = getCurrentHttpRequest();
             final String possivelToken = request.getHeader("Authorization");
             if (isEmpty(possivelToken) || !possivelToken.startsWith("Bearer ")) {
                 throw new BussinesException("Não foi possivei recuperar informações do token!");
             }
-            final String token = possivelToken.substring(7);
+            final String token = possivelToken.substring(SUB_STRING_TOKEN);
             String subject = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
             if (StringUtils.isBlank(subject)) {
                 throw new BussinesException("Não foi possivei recuperar informações do token!");
             }
             String[] decode = subject.split(";");
-            return String.valueOf(decode[0]);
+            return Long.valueOf(decode[0]);
         } catch (Exception e) {
             throw new BussinesException("Não foi possivei recuperar informações do token! " + e.getMessage());
         }
 
     }
 
-    public static Long getUserPerfil(final String token) {
+    public static String getUserPerfil() {
         try {
+            final HttpServletRequest request = getCurrentHttpRequest();
+            final String possivelToken = request.getHeader("Authorization");
+            if (isEmpty(possivelToken) || !possivelToken.startsWith("Bearer ")) {
+                throw new BussinesException("Não foi possivei recuperar informações do token!");
+            }
+            final String token = possivelToken.substring(SUB_STRING_TOKEN);
             String subject = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
             if (StringUtils.isBlank(subject)) {
                 throw new BussinesException("Não foi possivei recuperar informações do token!");
             }
             String[] decode = subject.split(";");
-            return Long.valueOf(decode[1]);
+            return String.valueOf(decode[1]);
         } catch (Exception e) {
             throw new BussinesException("Não foi possivei recuperar informações do token! " + e.getMessage());
         }

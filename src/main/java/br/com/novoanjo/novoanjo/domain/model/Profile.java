@@ -1,10 +1,6 @@
-package br.com.novoanjo.novoanjo.domain;
+package br.com.novoanjo.novoanjo.domain.model;
 
-import br.com.novoanjo.novoanjo.commons.constante.ProfileName;
-import br.com.novoanjo.novoanjo.commons.json.ProfileNameDeserializer;
-import br.com.novoanjo.novoanjo.commons.json.ProfileNameSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import br.com.novoanjo.novoanjo.domain.commons.constante.ProfileName;
 import lombok.*;
 
 import javax.persistence.*;
