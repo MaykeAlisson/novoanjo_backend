@@ -3,7 +3,6 @@ package br.com.novoanjo.novoanjo.domain.model;
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestUpdateDto;
 import lombok.*;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,7 +10,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import static br.com.novoanjo.novoanjo.domain.model.Address.convertToAddress;
@@ -57,14 +55,22 @@ public class User implements Serializable {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name = "user_service", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
-    private Set<Service> services = new HashSet<>();
+    private Set<ServiceModel> services = new HashSet<>();
 
     @CreationTimestamp
     @Column(name = "data_cadastro", nullable = false, columnDefinition = "datetime")
     private OffsetDateTime dataCadastro;
+
+    public boolean removeService(ServiceModel service){
+        return getServices().remove(service);
+    }
+
+    public boolean addService(ServiceModel service){
+        return getServices().add(service);
+    }
 
     public static User convertToUser(final UserRequestDto userRequest, final Profile profile) {
 

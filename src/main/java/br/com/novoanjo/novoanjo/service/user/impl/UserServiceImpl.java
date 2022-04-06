@@ -1,13 +1,12 @@
 package br.com.novoanjo.novoanjo.service.user.impl;
 
 import br.com.novoanjo.novoanjo.domain.commons.constante.ProfileName;
-import br.com.novoanjo.novoanjo.domain.commons.dto.UserAccessDto;
-import br.com.novoanjo.novoanjo.domain.commons.dto.UserByProfileDto;
-import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestDto;
-import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestUpdateDto;
+import br.com.novoanjo.novoanjo.domain.commons.dto.*;
 import br.com.novoanjo.novoanjo.domain.model.Profile;
+import br.com.novoanjo.novoanjo.domain.model.ServiceModel;
 import br.com.novoanjo.novoanjo.domain.model.User;
 import br.com.novoanjo.novoanjo.repository.ProfileRepository;
+import br.com.novoanjo.novoanjo.repository.ServiceRepository;
 import br.com.novoanjo.novoanjo.repository.UserRepository;
 import br.com.novoanjo.novoanjo.service.user.UserService;
 import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
@@ -17,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import static br.com.novoanjo.novoanjo.domain.commons.dto.UserInfoDto.toUserInfoDto;
 import static br.com.novoanjo.novoanjo.domain.model.User.convertToUser;
 import static java.lang.String.format;
 
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ProfileRepository profileRepository;
+
+    @Autowired
+    private ServiceRepository serviceRepository;
 
     @Override
     public UserAccessDto createUser(final UserRequestDto userRequest) {
@@ -62,15 +66,66 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<UserByProfileDto> findAllByProfile(final ProfileName profileName) {
+    public Set<UserInfoDto> findAllByProfile(final ProfileName profileName) {
 
         final Profile profile = profileRepository.findByProfileName(profileName)
                 .orElseThrow(() -> new NotFoundException(format("not found profile with name %s", profileName.getValor())));
 
-        Set<User> users = userRepository.findByProfile(profile);
+        return toUserInfoDto(userRepository.findByProfile(profile));
+    }
 
-        System.out.println(users);
+    @Override
+    public Set<UserInfoDto> findAllByService(final Long idService) {
 
-        return null;
+        final ServiceModel service = serviceRepository.findById(idService)
+                .orElseThrow(() -> new NotFoundException(format("not found service with id %s", idService)));
+
+        return toUserInfoDto(userRepository.findServiceAndProfileNotS(service.getId()));
+    }
+
+    @Override
+    public void userToService(final UserToServiceDto userToService, final Long idUser) {
+
+        Set<ServiceModel> services = userToService.getServices()
+                .stream()
+                .map(idService -> serviceRepository.findById(idService)
+                        .orElseThrow(() -> new NotFoundException(format("not found service with id %s", idService))))
+                .collect(Collectors.toSet());
+
+        User user = userRepository.findById(idUser)
+                .orElseThrow(() -> new NotFoundException(format("not found user with id %s", idUser)));
+
+        services.forEach(user::addService);
+
+        userRepository.save(user);
+
+    }
+
+    @Override
+    public void userRemoveService(final UserToServiceDto userToService, final Long idUser) {
+
+        Set<ServiceModel> services = userToService.getServices()
+                .stream()
+                .map(idService -> serviceRepository.findById(idService)
+                        .orElseThrow(() -> new NotFoundException(format("not found service with id %s", idService))))
+                .collect(Collectors.toSet());
+
+        User user = userRepository.findById(idUser)
+                .orElseThrow(() -> new NotFoundException(format("not found user with id %s", idUser)));
+
+        services.forEach(user::removeService);
+
+        userRepository.save(user);
+
+    }
+
+    @Override
+    public Set<UserInfoDto> userDiscoverService(final Long idUser){
+
+        final User user = userRepository.findById(idUser)
+                .orElseThrow(() -> new NotFoundException(format("not found user with id %s", idUser)));
+
+        final String state = user.getAddress().getState();
+
     }
 }

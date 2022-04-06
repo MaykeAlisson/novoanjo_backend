@@ -1,6 +1,5 @@
 package br.com.novoanjo.novoanjo.domain.model;
 
-import br.com.novoanjo.novoanjo.domain.commons.constante.ServiceName;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,7 +12,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "service")
-public class Service implements Serializable {
+public class ServiceModel implements Serializable {
 
     @EqualsAndHashCode.Include
     @Id
@@ -22,5 +21,5 @@ public class Service implements Serializable {
     private Long id;
 
     @Column(name = "description", nullable = false, length = 100)
-    private ServiceName serviceName;
+    private String serviceName;
 }
