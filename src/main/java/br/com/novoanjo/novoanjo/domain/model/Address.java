@@ -33,6 +33,9 @@ public class Address implements Serializable {
     @Column(name = "number", nullable = false)
     private Long number;
 
+    @Column(name = "city", nullable = false)
+    private String city;
+
     @Column(name = "state", nullable = false, length = 2)
     private String state;
 
@@ -42,6 +45,7 @@ public class Address implements Serializable {
                 .logradouro(addressRequest.getLogradouro())
                 .complement(addressRequest.getComplement())
                 .number(addressRequest.getNumber())
+                .city(addressRequest.getCity())
                 .state(addressRequest.getState())
                 .build();
     }

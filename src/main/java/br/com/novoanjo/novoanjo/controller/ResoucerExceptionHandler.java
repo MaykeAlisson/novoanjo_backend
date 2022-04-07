@@ -10,8 +10,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -38,13 +36,6 @@ public class ResoucerExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(status).headers(headers).build();
     }
 
-//    @Override
-//    protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status,
-//                                                         WebRequest request) {
-//
-//        return handleValidationInternal(ex);
-//    }
-
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -66,36 +57,6 @@ public class ResoucerExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(status).body(errors);
     }
 
-//    private ResponseEntity<Object> handleValidationInternal(Exception ex, HttpHeaders headers,
-//                                                            HttpStatus status, WebRequest request, BindingResult bindingResult) {
-//        ProblemType problemType = ProblemType.DADOS_INVALIDOS;
-//        String detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
-//
-//        List<Problem.Object> problemObjects = bindingResult.getAllErrors().stream()
-//                .map(objectError -> {
-//                    String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
-//
-//                    String name = objectError.getObjectName();
-//
-//                    if (objectError instanceof FieldError) {
-//                        name = ((FieldError) objectError).getField();
-//                    }
-//
-//                    return Problem.Object.builder()
-//                            .name(name)
-//                            .userMessage(message)
-//                            .build();
-//                })
-//                .collect(Collectors.toList());
-//
-//        Problem problem = createProblemBuilder(status, problemType, detail)
-//                .userMessage(detail)
-//                .objects(problemObjects)
-//                .build();
-//
-//        return handleExceptionInternal(ex, problem, headers, status, request);
-//    }
-
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<StandardError> resourceNotFound(NotFoundException e, HttpServletRequest request) {
         String error = "Resource nou found";
@@ -111,9 +72,6 @@ public class ResoucerExceptionHandler extends ResponseEntityExceptionHandler {
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
-
-
-
 
 
 }

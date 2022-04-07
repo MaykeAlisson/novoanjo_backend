@@ -1,9 +1,7 @@
 package br.com.novoanjo.novoanjo.repository;
 
 import br.com.novoanjo.novoanjo.domain.model.Profile;
-import br.com.novoanjo.novoanjo.domain.model.ServiceModel;
 import br.com.novoanjo.novoanjo.domain.model.User;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,12 +18,25 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Set<User> findByProfile(Profile profile);
 
     @Query(value = """
-            select * from user u
-            inner join user_service us
-            on us.user_id = u.id
-            where us.service_id = :idService
-            and u.profile_id <> (select p.id from profile p where p.name = 'S')
+            SELECT * FROM user u
+            INNER JOIN user_service us
+            ON us.user_id = u.id
+            WHERE us.service_id = :idService
+            AND u.profile_id <> (SELECT p.id FROM profile p WHERE p.name = 'S')
             """, nativeQuery = true )
     Set<User> findServiceAndProfileNotS(Long idService);
 
+    @Query(value = """
+            SELECT DISTINCT * FROM user u
+            INNER JOIN user_service us
+            ON us.user_id = u.id
+            INNER JOIN address a
+            ON a.id = u.address_id
+            WHERE a.state = :state
+            AND a.city = :city
+            AND u.id <> :idUser
+            AND u.profile_id <> (SELECT p.id FROM profile p WHERE p.name = 'S')
+            AND us.service_id IN (:idsService)
+            """, nativeQuery = true)
+    Set<User> findServiceDescorvery(Long idUser, String city, String state, Set<Long> idsService);
 }

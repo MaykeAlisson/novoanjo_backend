@@ -5,13 +5,13 @@ import br.com.novoanjo.novoanjo.domain.commons.dto.*;
 import br.com.novoanjo.novoanjo.domain.model.Profile;
 import br.com.novoanjo.novoanjo.domain.model.ServiceModel;
 import br.com.novoanjo.novoanjo.domain.model.User;
+import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
+import br.com.novoanjo.novoanjo.infra.exception.NotFoundException;
+import br.com.novoanjo.novoanjo.infra.util.jwt.Token;
 import br.com.novoanjo.novoanjo.repository.ProfileRepository;
 import br.com.novoanjo.novoanjo.repository.ServiceRepository;
 import br.com.novoanjo.novoanjo.repository.UserRepository;
 import br.com.novoanjo.novoanjo.service.user.UserService;
-import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
-import br.com.novoanjo.novoanjo.infra.exception.NotFoundException;
-import br.com.novoanjo.novoanjo.infra.util.jwt.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static br.com.novoanjo.novoanjo.domain.commons.dto.UserInfoDto.toUserInfoDto;
+import static br.com.novoanjo.novoanjo.domain.commons.dto.UserInfoDto.toUserInfoServiceCompatibleDto;
 import static br.com.novoanjo.novoanjo.domain.model.User.convertToUser;
 import static java.lang.String.format;
 
@@ -120,12 +121,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<UserInfoDto> userDiscoverService(final Long idUser){
+    public Set<UserInfoDto> userDiscoverService(final Long idUser) {
 
         final User user = userRepository.findById(idUser)
                 .orElseThrow(() -> new NotFoundException(format("not found user with id %s", idUser)));
 
+        final String city = user.getAddress().getCity();
         final String state = user.getAddress().getState();
+        final Set<Long> idsService = user.getServices().stream().map(ServiceModel::getId).collect(Collectors.toSet());
 
+        return toUserInfoServiceCompatibleDto(
+                userRepository.findServiceDescorvery(user.getId(), city, state, idsService),
+                user.getServices()
+        );
     }
 }

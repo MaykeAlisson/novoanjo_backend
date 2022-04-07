@@ -27,5 +27,8 @@ public class AddressRequestDto implements Serializable {
     private Long number;
 
     @NotBlank
+    private String city;
+
+    @NotBlank
     private String state;
 }
