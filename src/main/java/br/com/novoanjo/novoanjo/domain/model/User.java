@@ -64,12 +64,12 @@ public class User implements Serializable {
     @Column(name = "data_cadastro", nullable = false, columnDefinition = "datetime")
     private OffsetDateTime dataCadastro;
 
-    public boolean removeService(ServiceModel service){
-        return getServices().remove(service);
+    public void removeService(ServiceModel service){
+        getServices().remove(service);
     }
 
-    public boolean addService(ServiceModel service){
-        return getServices().add(service);
+    public void addService(ServiceModel service){
+        getServices().add(service);
     }
 
     public static User convertToUser(final UserRequestDto userRequest, final Profile profile) {

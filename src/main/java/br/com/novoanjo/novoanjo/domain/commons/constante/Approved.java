@@ -2,16 +2,25 @@ package br.com.novoanjo.novoanjo.domain.commons.constante;
 
 import br.com.novoanjo.novoanjo.infra.util.model.Constante;
 
-public enum Approved implements Constante {
-    ;
+public enum Approved implements Constante<String> {
+    S("Sim", "S"),
+    N("Não", "N");
 
-    @Override
-    public String getDescricao() {
-        return null;
+    private final String descricao;
+    private final String valor;
+
+    Approved(final String descricao, final String valor) {
+        this.descricao = descricao;
+        this.valor = valor;
     }
 
     @Override
-    public Object getValor() {
-        return null;
+    public String getDescricao() {
+        return this.descricao;
+    }
+
+    @Override
+    public String getValor() {
+        return this.valor;
     }
 }

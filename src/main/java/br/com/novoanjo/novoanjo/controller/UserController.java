@@ -33,7 +33,7 @@ public class UserController {
             value = "Esta operação criar um novo usuario no sistema",
             notes = ""
     )
-    public ResponseEntity<UserAccessDto> create(@RequestBody @Valid final UserRequestDto obj) {
+    public ResponseEntity<UserAccessDto> create(@Valid @RequestBody final UserRequestDto obj) {
 
         final UserAccessDto user = userService.createUser(obj);
 
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/v1/user")
-    public ResponseEntity<Void> update(@RequestBody @Valid final UserRequestUpdateDto obj) {
+    public ResponseEntity<Void> update(@Valid @RequestBody final UserRequestUpdateDto obj) {
 
         userService.updateUser(obj, getUserId());
 
@@ -97,7 +97,7 @@ public class UserController {
             value = "Esta operação criar um novo usuario no sistema",
             notes = ""
     )
-    public ResponseEntity<Void> userToService(@RequestBody @Valid final UserToServiceDto obj) {
+    public ResponseEntity<Void> userToService(@Valid @RequestBody final UserToServiceDto obj) {
 
         userService.userToService(obj, getUserId());
 
@@ -110,7 +110,7 @@ public class UserController {
             value = "Esta operação criar um novo usuario no sistema",
             notes = ""
     )
-    public ResponseEntity<Void> userRemoveService(@RequestBody @Valid final UserToServiceDto obj) {
+    public ResponseEntity<Void> userRemoveService(@Valid @RequestBody final UserToServiceDto obj) {
 
         userService.userRemoveService(obj, getUserId());
 

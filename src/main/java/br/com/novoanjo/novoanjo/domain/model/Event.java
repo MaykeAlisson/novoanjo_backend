@@ -1,6 +1,7 @@
 package br.com.novoanjo.novoanjo.domain.model;
 
 import br.com.novoanjo.novoanjo.domain.commons.constante.Approved;
+import br.com.novoanjo.novoanjo.domain.commons.dto.EventRequestDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -8,6 +9,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+
+import static br.com.novoanjo.novoanjo.domain.model.Address.convertToAddress;
 
 @Data
 @Builder
@@ -45,4 +48,16 @@ public class Event implements Serializable {
     @CreationTimestamp
     @Column(name = "data_cadastro", nullable = false, columnDefinition = "datetime")
     private OffsetDateTime dataCadastro;
+
+    public static Event toEvent(final EventRequestDto dto, final User user){
+
+        return Event.builder()
+                .name(dto.getName())
+                .description(dto.getDescription())
+                .data(dto.getData())
+                .approved(Approved.N)
+                .user(user)
+                .address(convertToAddress(dto.getAddress()))
+                .build();
+    }
 }
