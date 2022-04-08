@@ -1,5 +1,7 @@
 package br.com.novoanjo.novoanjo.domain.commons.dto;
 
+import br.com.novoanjo.novoanjo.domain.commons.json.DateTimeDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +25,7 @@ public class EventRequestDto implements Serializable {
     private String description;
 
     @NotNull
+    @JsonDeserialize(using = DateTimeDeserializer.class)
     private LocalDateTime data;
 
     @NotNull
