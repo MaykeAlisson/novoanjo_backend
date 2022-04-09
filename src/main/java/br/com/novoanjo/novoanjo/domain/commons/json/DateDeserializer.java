@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 public class DateDeserializer extends StdDeserializer<LocalDate> {
 
     public DateDeserializer() {
-        this((Class) null);
+        this(null);
     }
 
     private DateDeserializer(final Class<LocalDate> vc) {

@@ -30,7 +30,7 @@ public class EventController {
     )
     public ResponseEntity<EventInfoDto> create(@Valid @RequestBody final EventRequestDto obj) {
 
-        final Event event = eventService.create(obj, getUserId());
+        final Event event = eventService.create(obj, 6L);
 
         final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
         return ResponseEntity.created(uri).build();

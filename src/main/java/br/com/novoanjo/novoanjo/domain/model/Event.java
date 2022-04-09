@@ -36,13 +36,16 @@ public class Event implements Serializable {
     @Column(name = "data", nullable = false)
     private LocalDateTime data;
 
-    @Column(name = "approved", nullable = false, length = 1)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "approved", nullable = false, length = 1, columnDefinition = "text")
     private Approved approved;
 
-    @Column(name = "user_id")
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "address_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @CreationTimestamp

@@ -1,5 +1,6 @@
 package br.com.novoanjo.novoanjo.service.event.impl;
 
+import br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventRequestDto;
 import br.com.novoanjo.novoanjo.domain.model.Event;
 import br.com.novoanjo.novoanjo.domain.model.User;
@@ -29,5 +30,12 @@ public class EventServiceImpl implements EventService {
                 .orElseThrow(() -> new NotFoundException(format("not found user with id %s", idUser)));
 
         return eventRepository.save(toEvent(request, user));
+    }
+
+    public EventInfoDto findById(final Long idEvent){
+
+        Event event = eventRepository.findById(idEvent)
+                .orElseThrow(() -> new NotFoundException(format("not found event with id %s", idEvent)));
+
     }
 }
