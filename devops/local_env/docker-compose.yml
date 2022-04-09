@@ -2,6 +2,7 @@ version: '3.1'
 
 services:
   mysqldb:
+    platform: linux/x86_64
     image: mysql
     container_name: db_novoanjo
     restart: always
@@ -11,7 +12,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - /home/mayke/develop/docker/volumes/mysql:/var/lib/mysql
+      - ~/develop/docker/volumes/mysql:/var/lib/mysql
     networks:
       - novoanjo-network
 
