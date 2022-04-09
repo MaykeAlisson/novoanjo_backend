@@ -1,5 +1,6 @@
 package br.com.novoanjo.novoanjo.domain.commons.dto;
 
+import br.com.novoanjo.novoanjo.domain.model.Phone;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +20,12 @@ public class PhoneRequestDto implements Serializable {
 
     @NotNull
     private Long number;
+
+    public static PhoneRequestDto toPhone(Phone phone){
+        return PhoneRequestDto.builder()
+                .ddd(phone.getDdd())
+                .number(phone.getNumber())
+                .build();
+    }
 
 }

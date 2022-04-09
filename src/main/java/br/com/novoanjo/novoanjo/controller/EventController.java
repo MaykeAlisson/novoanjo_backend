@@ -3,6 +3,7 @@ package br.com.novoanjo.novoanjo.controller;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventRequestDto;
 import br.com.novoanjo.novoanjo.domain.model.Event;
+import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
 import br.com.novoanjo.novoanjo.service.event.EventService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Objects;
 import java.util.Set;
 
 import static br.com.novoanjo.novoanjo.infra.util.jwt.Token.getUserId;
@@ -42,12 +44,19 @@ public class EventController {
             value = "Esta operação criar um novo evento no sistema",
             notes = ""
     )
-    public ResponseEntity<EventInfoDto> findById(@Valid @RequestBody final EventRequestDto obj) {
+    public ResponseEntity<EventInfoDto> findById(@PathVariable final Long id) {
 
-        final Event event = eventService.create(obj, getUserId());
+        if (Objects.isNull(id)) {
+            throw new BussinesException("id required!");
+        }
 
-        final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        final EventInfoDto event = eventService.findById(id);
+
+        if(Objects.isNull(event)){
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok().body(event);
 
     }
 
