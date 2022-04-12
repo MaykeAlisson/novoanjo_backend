@@ -6,6 +6,7 @@ import br.com.novoanjo.novoanjo.domain.model.Event;
 import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
 import br.com.novoanjo.novoanjo.service.event.EventService;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.Set;
 
 import static br.com.novoanjo.novoanjo.infra.util.jwt.Token.getUserId;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/api/event")
 public class EventController {
@@ -32,9 +34,10 @@ public class EventController {
     )
     public ResponseEntity<EventInfoDto> create(@Valid @RequestBody final EventRequestDto obj) {
 
-        final Event event = eventService.create(obj, 6L);
-
+        log.info("EventController.create - start - EventRequestDto {}", obj);
+        final Event event = eventService.create(obj, getUserId());
         final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
+        log.info("EventController.create - end - Event {}", event);
         return ResponseEntity.created(uri).build();
 
     }
@@ -46,6 +49,7 @@ public class EventController {
     )
     public ResponseEntity<EventInfoDto> findById(@PathVariable final Long id) {
 
+        log.info("EventController.findById - start - idEvent {}", id);
         if (Objects.isNull(id)) {
             throw new BussinesException("id required!");
         }
@@ -55,7 +59,7 @@ public class EventController {
         if(Objects.isNull(event)){
             return ResponseEntity.noContent().build();
         }
-
+        log.info("EventController.findById - end - EventInfoDto {}", event);
         return ResponseEntity.ok().body(event);
 
     }
