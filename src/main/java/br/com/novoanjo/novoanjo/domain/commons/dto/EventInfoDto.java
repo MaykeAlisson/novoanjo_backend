@@ -1,7 +1,6 @@
 package br.com.novoanjo.novoanjo.domain.commons.dto;
 
 import br.com.novoanjo.novoanjo.domain.model.Event;
-import br.com.novoanjo.novoanjo.domain.model.Phone;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,9 +8,11 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import static br.com.novoanjo.novoanjo.domain.commons.dto.AddressRequestDto.toAddress;
 import static br.com.novoanjo.novoanjo.domain.commons.dto.PhoneRequestDto.toPhone;
+import static java.util.stream.Collectors.toSet;
 
 @Data
 @Builder
@@ -25,7 +26,7 @@ public class EventInfoDto implements Serializable {
     private AddressRequestDto address;
     private PhoneRequestDto phone;
 
-    public static EventInfoDto toEventInfo(Event event){
+    public static EventInfoDto toEventInfo(Event event) {
         return EventInfoDto.builder()
                 .name(event.getName())
                 .description(event.getDescription())
@@ -33,6 +34,18 @@ public class EventInfoDto implements Serializable {
                 .address(toAddress(event.getAddress()))
                 .phone(toPhone(event.getUser().getPhone()))
                 .build();
+    }
+
+    public static Set<EventInfoDto> toListEventInfoDto(Set<Event> events) {
+        return events.stream().map(event ->
+                EventInfoDto.builder()
+                        .name(event.getName())
+                        .description(event.getDescription())
+                        .data(event.getData())
+                        .address(toAddress(event.getAddress()))
+                        .phone(toPhone(event.getUser().getPhone()))
+                        .build()
+        ).collect(toSet());
     }
 
 }

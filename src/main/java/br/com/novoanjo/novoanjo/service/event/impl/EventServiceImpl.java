@@ -13,9 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 import static br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto.toEventInfo;
+import static br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto.toListEventInfoDto;
 import static br.com.novoanjo.novoanjo.domain.model.Event.toEvent;
 import static java.lang.String.format;
 
@@ -52,6 +56,32 @@ public class EventServiceImpl implements EventService {
         return Objects.equals(event.getApproved(), Approved.S)
                 ? toEventInfo(event)
                 : null;
+
+    }
+
+    @Override
+    public Set<EventInfoDto> findAllApproved(){
+
+        log.info("EventServiceImpl.findAll - start ");
+
+        Set<Event> events = eventRepository.findByApprovedAndDataAfter(Approved.S, LocalDateTime.now());
+
+        log.info("EventServiceImpl.findAll - end - Event {}", events);
+
+        return toListEventInfoDto(events);
+
+    }
+
+    @Override
+    public Set<EventInfoDto> findByState(final String state){
+
+        log.info("EventServiceImpl.findByState - start - State {}", state);
+
+        Set<Event> events = eventRepository.findByState(state, LocalDateTime.now());
+
+        log.info("EventServiceImpl.findByState - end - Event {}", events);
+
+        return toListEventInfoDto(events);
 
     }
 }

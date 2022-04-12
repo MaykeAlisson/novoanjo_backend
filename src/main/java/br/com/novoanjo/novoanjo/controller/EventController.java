@@ -7,6 +7,7 @@ import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
 import br.com.novoanjo.novoanjo.service.event.EventService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,17 +36,17 @@ public class EventController {
     public ResponseEntity<EventInfoDto> create(@Valid @RequestBody final EventRequestDto obj) {
 
         log.info("EventController.create - start - EventRequestDto {}", obj);
-        final Event event = eventService.create(obj, getUserId());
+        final Event event = eventService.create(obj, 6L);
         final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
-        log.info("EventController.create - end - Event {}", event);
+        log.info("EventController.create - end - Event.id {}", event.getId());
         return ResponseEntity.created(uri).build();
 
     }
 
     @GetMapping(value = "/v1/event/{id}")
     @ApiOperation(
-            value = "Esta operação criar um novo evento no sistema",
-            notes = ""
+            value = "Esta operação busca um evento por id",
+            notes = "O evento pode existir mais so sera retornado se ja foi aprovado"
     )
     public ResponseEntity<EventInfoDto> findById(@PathVariable final Long id) {
 
@@ -56,7 +57,7 @@ public class EventController {
 
         final EventInfoDto event = eventService.findById(id);
 
-        if(Objects.isNull(event)){
+        if (Objects.isNull(event)) {
             return ResponseEntity.noContent().build();
         }
         log.info("EventController.findById - end - EventInfoDto {}", event);
@@ -64,24 +65,45 @@ public class EventController {
 
     }
 
-//    @GetMapping(value = "/v1/event")
-//    @ApiOperation(
-//            value = "Esta operação criar um novo evento no sistema",
-//            notes = ""
-//    )
-//    public ResponseEntity<Set<EventInfoDto>> findByAll() {
-//
-//        final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
-//        return ResponseEntity.created(uri).build();
-//
-//    }
+    @GetMapping(value = "/v1/event")
+    @ApiOperation(
+            value = "Esta operação criar um novo evento no sistema",
+            notes = ""
+    )
+    public ResponseEntity<Set<EventInfoDto>> findByAllApproved() {
 
-//    @GetMapping(value = "/v1/event/state/{state}")
+        log.info("EventController.findByAllApproved - start ");
+        final Set<EventInfoDto> allApproved = eventService.findAllApproved();
+        log.info("EventController.findByAllApproved - end - EventInfoDto {}", allApproved);
+        return ResponseEntity.ok().body(allApproved);
+
+    }
+
+    @GetMapping(value = "/v1/event/state/{state}")
+    @ApiOperation(
+            value = "Esta operação criar um novo evento no sistema",
+            notes = ""
+    )
+    public ResponseEntity<Set<EventInfoDto>> findByState(@PathVariable final String state) {
+
+        log.info("EventController.findByState - start - State {}", state);
+        if (StringUtils.isBlank(state)) {
+            throw new BussinesException("state required!");
+        }
+
+        final Set<EventInfoDto> eventState = eventService.findByState(state);
+
+        log.info("EventController.findByState - end - State {}", eventState);
+        return ResponseEntity.ok(eventState);
+
+    }
+
+//    @PutMapping(value = "/v1/event")
 //    @ApiOperation(
 //            value = "Esta operação criar um novo evento no sistema",
 //            notes = ""
 //    )
-//    public ResponseEntity<Set<EventInfoDto>> findByState(@Valid @RequestBody final EventRequestDto obj) {
+//    public ResponseEntity<Set<EventInfoDto>> update(@Valid @RequestBody final EventRequestDto obj) {
 //
 //        final Event event = eventService.create(obj, getUserId());
 //
@@ -90,7 +112,7 @@ public class EventController {
 //
 //    }
 
-//    @PutMapping(value = "/v1/event")
+    //    @PutMapping(value = "/v1/event/pendent")
 //    @ApiOperation(
 //            value = "Esta operação criar um novo evento no sistema",
 //            notes = ""
