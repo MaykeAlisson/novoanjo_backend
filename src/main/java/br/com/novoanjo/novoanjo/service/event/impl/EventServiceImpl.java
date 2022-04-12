@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -66,7 +65,7 @@ public class EventServiceImpl implements EventService {
 
         Set<Event> events = eventRepository.findByApprovedAndDataAfter(Approved.S, LocalDateTime.now());
 
-        log.info("EventServiceImpl.findAll - end - Event {}", events);
+        log.info("EventServiceImpl.findAll - end - Event.size {}", events.size());
 
         return toListEventInfoDto(events);
 
@@ -79,7 +78,20 @@ public class EventServiceImpl implements EventService {
 
         Set<Event> events = eventRepository.findByState(state, LocalDateTime.now());
 
-        log.info("EventServiceImpl.findByState - end - Event {}", events);
+        log.info("EventServiceImpl.findByState - end - Event.size {}", events.size());
+
+        return toListEventInfoDto(events);
+
+    }
+
+    @Override
+    public Set<EventInfoDto> findAllPendent(){
+
+        log.info("EventServiceImpl.findAllPendent - start ");
+
+        Set<Event> events = eventRepository.findByApprovedAndDataAfter(Approved.N, LocalDateTime.now());
+
+        log.info("EventServiceImpl.findAllPendent - end - Event.size {}", events.size());
 
         return toListEventInfoDto(events);
 

@@ -7,6 +7,7 @@ import br.com.novoanjo.novoanjo.infra.exception.ValidateError;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.context.MessageSource;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,22 +60,20 @@ public class ResoucerExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
-        Throwable rootCause = ExceptionUtils.getRootCause(ex);
+
         logger.error("Http MessageNo tReadable Exception ", ex);
         String error = "Http Message Not Readable Exception";
+        StandardError err = new StandardError(Instant.now(), status.value(), error, ex.getMessage(), request.getContextPath());
+        return ResponseEntity.status(status).body(err);
+    }
 
-        if (rootCause instanceof InvalidFormatException) {
-            StandardError err = new StandardError(Instant.now(), status.value(), error, ex.getMessage(), request.getContextPath());
-            return ResponseEntity.status(status).body(err);
-        } else if (rootCause instanceof PropertyBindingException) {
-            StandardError err = new StandardError(Instant.now(), status.value(), error, ex.getMessage(), request.getContextPath());
-            return ResponseEntity.status(status).body(err);
-        }
-
-        String detail = "O corpo da requisição está inválido. Verifique erro de sintaxe.";
+    @Override
+    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
+                                                        HttpStatus status, WebRequest request) {
+        logger.error("Type Mismatch Exception ", ex);
+        String error = "Type Mismatch Exception";
 
         StandardError err = new StandardError(Instant.now(), status.value(), error, ex.getMessage(), request.getContextPath());
-
         return ResponseEntity.status(status).body(err);
     }
 

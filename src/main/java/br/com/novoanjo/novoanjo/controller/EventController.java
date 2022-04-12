@@ -1,5 +1,6 @@
 package br.com.novoanjo.novoanjo.controller;
 
+import br.com.novoanjo.novoanjo.domain.commons.constante.ProfileName;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventRequestDto;
 import br.com.novoanjo.novoanjo.domain.model.Event;
@@ -19,6 +20,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import static br.com.novoanjo.novoanjo.infra.util.jwt.Token.getUserId;
+import static br.com.novoanjo.novoanjo.infra.util.jwt.Token.getUserPerfil;
 
 @Slf4j
 @RestController
@@ -67,7 +69,7 @@ public class EventController {
 
     @GetMapping(value = "/v1/event")
     @ApiOperation(
-            value = "Esta operação criar um novo evento no sistema",
+            value = "Esta operação busca todos proximos eventos aprovados",
             notes = ""
     )
     public ResponseEntity<Set<EventInfoDto>> findByAllApproved() {
@@ -81,7 +83,7 @@ public class EventController {
 
     @GetMapping(value = "/v1/event/state/{state}")
     @ApiOperation(
-            value = "Esta operação criar um novo evento no sistema",
+            value = "Esta operação busca todos proximos eventos aprovados por estado",
             notes = ""
     )
     public ResponseEntity<Set<EventInfoDto>> findByState(@PathVariable final String state) {
@@ -95,6 +97,25 @@ public class EventController {
 
         log.info("EventController.findByState - end - State {}", eventState);
         return ResponseEntity.ok(eventState);
+
+    }
+
+    @GetMapping(value = "/v1/event/pendent")
+    @ApiOperation(
+            value = "Esta operação busca todos proximos eventos pendentes",
+            notes = ""
+    )
+    public ResponseEntity<Set<EventInfoDto>> findAllPendent() {
+
+        log.info("EventController.findAllPendent - start");
+        if (getUserPerfil().contains(ProfileName.M.getValor())) {
+            final Set<EventInfoDto> eventos = eventService.findAllPendent();
+            log.info("EventController.findAllPendent - end - Events size {}", eventos.size());
+            return ResponseEntity.ok(eventos);
+        }
+
+        log.info("EventController.findAllPendent - end");
+        return ResponseEntity.noContent().build();
 
     }
 
@@ -112,17 +133,5 @@ public class EventController {
 //
 //    }
 
-    //    @PutMapping(value = "/v1/event/pendent")
-//    @ApiOperation(
-//            value = "Esta operação criar um novo evento no sistema",
-//            notes = ""
-//    )
-//    public ResponseEntity<Set<EventInfoDto>> update(@Valid @RequestBody final EventRequestDto obj) {
-//
-//        final Event event = eventService.create(obj, getUserId());
-//
-//        final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
-//        return ResponseEntity.created(uri).build();
-//
-//    }
+
 }

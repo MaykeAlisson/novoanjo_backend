@@ -15,4 +15,6 @@ public interface EventService {
     Set<EventInfoDto> findAllApproved();
 
     Set<EventInfoDto> findByState(String state);
+
+    Set<EventInfoDto> findAllPendent();
 }
