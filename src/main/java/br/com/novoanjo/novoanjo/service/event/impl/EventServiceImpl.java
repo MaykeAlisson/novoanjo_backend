@@ -1,6 +1,7 @@
 package br.com.novoanjo.novoanjo.service.event.impl;
 
 import br.com.novoanjo.novoanjo.domain.commons.constante.Approved;
+import br.com.novoanjo.novoanjo.domain.commons.dto.EventApproved;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventRequestDto;
 import br.com.novoanjo.novoanjo.domain.model.Event;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto.toEventInfo;
 import static br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto.toListEventInfoDto;
@@ -45,7 +47,6 @@ public class EventServiceImpl implements EventService {
         log.info("EventServiceImpl.create - end ");
         return eventRepository.save(toEvent(request, user));
     }
-
     @Override
     public EventInfoDto findById(final Long idEvent){
 
@@ -59,7 +60,6 @@ public class EventServiceImpl implements EventService {
                 : null;
 
     }
-
     @Override
     public Set<EventInfoDto> findAllApproved(){
 
@@ -72,7 +72,6 @@ public class EventServiceImpl implements EventService {
         return toListEventInfoDto(events);
 
     }
-
     @Override
     public Set<EventInfoDto> findByState(final String state){
 
@@ -85,7 +84,6 @@ public class EventServiceImpl implements EventService {
         return toListEventInfoDto(events);
 
     }
-
     @Override
     public Set<EventInfoDto> findAllPendent(){
 
@@ -98,7 +96,6 @@ public class EventServiceImpl implements EventService {
         return toListEventInfoDto(events);
 
     }
-
     @Override
     public void update(final EventRequestDto dto, final Long idEvent, final Long idUser){
 
@@ -113,6 +110,32 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(toEventUpdate(dto, event));
         
         log.info("EventServiceImpl.update - end ");
+
+    }
+    @Override
+    public void aprove(final EventApproved ids){
+
+        log.info("EventServiceImpl.aprove - start - EventApproved {} ", ids);
+        Set<Event> events = ids.getEvents().stream().map(id -> eventRepository.findById(id)
+                        .orElseThrow(() -> new NotFoundException(format("não foi encontrado evento com o id %s", id))))
+                .collect(Collectors.toSet());
+
+        events.forEach(event -> event.setApproved(Approved.S));
+        eventRepository.saveAll(events);
+
+        log.info("EventServiceImpl.aprove - end ");
+
+    }
+    @Override
+    public void deleteById(final Long id, final Long idUser){
+
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("não foi localizado evento com o id " + id));
+
+        if(!event.getUser().getId().equals(idUser))
+            throw new BussinesException(format("Este evento não foi criado pelo usuario com id %s", idUser));
+
+        eventRepository.delete(event);
 
     }
 }

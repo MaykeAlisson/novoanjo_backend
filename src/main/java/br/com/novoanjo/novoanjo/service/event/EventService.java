@@ -1,5 +1,6 @@
 package br.com.novoanjo.novoanjo.service.event;
 
+import br.com.novoanjo.novoanjo.domain.commons.dto.EventApproved;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventRequestDto;
 import br.com.novoanjo.novoanjo.domain.model.Event;
@@ -19,4 +20,8 @@ public interface EventService {
     Set<EventInfoDto> findAllPendent();
 
     void update(EventRequestDto dto, Long idEvent, Long idUser);
+
+    void aprove(EventApproved ids);
+
+    void deleteById(Long id, Long idUser);
 }

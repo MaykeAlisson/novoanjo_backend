@@ -34,6 +34,7 @@ docker-compose up -d /devops/local_env/
 * Documentar metodos
 * Colocar msg erro em PT-BR
 * Escreter teste unitario / Integração
+* Criar exchedule eventos pendentes alerta master
 * Configurar Autenticação
 * Configurar Swagger
 * Configurar CI/CD

@@ -138,43 +138,42 @@ public class EventController {
 
     }
 
-//    @PutMapping(value = "/v1/event")
-//    @ApiOperation(
-//            value = "Esta operação aprova eventos pendentes",
-//            notes = "Somente usuario profile M"
-//    )
-//    public ResponseEntity<Void> updateApproved(@Valid @RequestBody final EventApproved ids) {
-//
-//        log.info("EventController.updateApproved - start - EventApproved {} ", ids);
-//        if (getUserPerfil().contains(ProfileName.M.getValor())) {
-//            eventService.findAllPendent();
-//            log.info("EventController.updateApproved - end ");
-//            return ResponseEntity.ok().build();
-//        }
-//
-//        log.info("EventController.updateApproved - end");
-//        return ResponseEntity.noContent().build();
-//
-//    }
+    @PutMapping(value = "/v1/event")
+    @ApiOperation(
+            value = "Esta operação aprova eventos pendentes",
+            notes = "Somente usuario profile M"
+    )
+    public ResponseEntity<Void> updateApproved(@Valid @RequestBody final EventApproved ids) {
 
+        log.info("EventController.updateApproved - start - EventApproved {} ", ids);
+        if (getUserPerfil().contains(ProfileName.M.getValor())) {
+            eventService.aprove(ids);
+            log.info("EventController.updateApproved - end ");
+            return ResponseEntity.ok().build();
+        }
 
-//    @DeleteMapping(value = "/v1/event/{id}")
-//    @ApiOperation(
-//            value = "Esta operação deleta evento",
-//            notes = ""
-//    )
-//    public ResponseEntity<Void> delete(@PathVariable final Long id) {
-//
-//        log.info("EventController.delete - start - idEvent {}", id);
-//        if (Objects.isNull(id)) {
-//            throw new BussinesException("id required!");
-//        }
-//
-//        eventService.delete( id, getUserId());
-//
-//        return ResponseEntity.ok().build();
-//
-//    }
+        log.info("EventController.updateApproved - end");
+        return ResponseEntity.noContent().build();
+
+    }
+
+    @DeleteMapping(value = "/v1/event/{id}")
+    @ApiOperation(
+            value = "Esta operação deleta evento",
+            notes = ""
+    )
+    public ResponseEntity<Void> delete(@PathVariable final Long id) {
+
+        log.info("EventController.delete - start - idEvent {}", id);
+        if (Objects.isNull(id)) {
+            throw new BussinesException("id obrigatorio! /event/{id}");
+        }
+
+        eventService.deleteById(id, getUserId());
+
+        return ResponseEntity.ok().build();
+
+    }
 
 
 }

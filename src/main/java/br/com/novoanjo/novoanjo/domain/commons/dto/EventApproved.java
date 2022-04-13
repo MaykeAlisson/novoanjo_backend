@@ -18,5 +18,5 @@ public class EventApproved implements Serializable {
 
     @NotNull
     @NotEmpty
-    private Set<Long> services;
+    private Set<Long> events;
 }
