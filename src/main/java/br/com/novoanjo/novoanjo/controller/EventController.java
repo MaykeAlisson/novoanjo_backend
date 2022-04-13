@@ -1,6 +1,7 @@
 package br.com.novoanjo.novoanjo.controller;
 
 import br.com.novoanjo.novoanjo.domain.commons.constante.ProfileName;
+import br.com.novoanjo.novoanjo.domain.commons.dto.EventApproved;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventRequestDto;
 import br.com.novoanjo.novoanjo.domain.model.Event;
@@ -119,17 +120,59 @@ public class EventController {
 
     }
 
+    @PutMapping(value = "/v1/event/{id}")
+    @ApiOperation(
+            value = "Esta operação atualiza um evento no sistema",
+            notes = ""
+    )
+    public ResponseEntity<Void> update(@Valid @RequestBody final EventRequestDto obj, @PathVariable final Long id) {
+
+        log.info("EventController.update - start - EventRequestDto {} - idEvent {}", obj, id);
+        if (Objects.isNull(id)) {
+            throw new BussinesException("id required!");
+        }
+
+        eventService.update(obj, id, getUserId());
+
+        return ResponseEntity.ok().build();
+
+    }
+
 //    @PutMapping(value = "/v1/event")
 //    @ApiOperation(
-//            value = "Esta operação criar um novo evento no sistema",
+//            value = "Esta operação aprova eventos pendentes",
+//            notes = "Somente usuario profile M"
+//    )
+//    public ResponseEntity<Void> updateApproved(@Valid @RequestBody final EventApproved ids) {
+//
+//        log.info("EventController.updateApproved - start - EventApproved {} ", ids);
+//        if (getUserPerfil().contains(ProfileName.M.getValor())) {
+//            eventService.findAllPendent();
+//            log.info("EventController.updateApproved - end ");
+//            return ResponseEntity.ok().build();
+//        }
+//
+//        log.info("EventController.updateApproved - end");
+//        return ResponseEntity.noContent().build();
+//
+//    }
+
+
+//    @DeleteMapping(value = "/v1/event/{id}")
+//    @ApiOperation(
+//            value = "Esta operação deleta evento",
 //            notes = ""
 //    )
-//    public ResponseEntity<Set<EventInfoDto>> update(@Valid @RequestBody final EventRequestDto obj) {
+//    public ResponseEntity<Void> delete(@PathVariable final Long id) {
 //
-//        final Event event = eventService.create(obj, getUserId());
+//        log.info("EventController.delete - start - idEvent {}", id);
+//        if (Objects.isNull(id)) {
+//            throw new BussinesException("id required!");
+//        }
 //
-//        final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
-//        return ResponseEntity.created(uri).build();
+//        eventService.delete( id, getUserId());
+//
+//        return ResponseEntity.ok().build();
 //
 //    }
 

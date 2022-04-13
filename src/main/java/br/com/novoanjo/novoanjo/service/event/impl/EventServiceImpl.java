@@ -5,6 +5,7 @@ import br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventRequestDto;
 import br.com.novoanjo.novoanjo.domain.model.Event;
 import br.com.novoanjo.novoanjo.domain.model.User;
+import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
 import br.com.novoanjo.novoanjo.infra.exception.NotFoundException;
 import br.com.novoanjo.novoanjo.repository.EventRepository;
 import br.com.novoanjo.novoanjo.repository.UserRepository;
@@ -20,6 +21,7 @@ import java.util.Set;
 import static br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto.toEventInfo;
 import static br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto.toListEventInfoDto;
 import static br.com.novoanjo.novoanjo.domain.model.Event.toEvent;
+import static br.com.novoanjo.novoanjo.domain.model.Event.toEventUpdate;
 import static java.lang.String.format;
 
 @Slf4j
@@ -94,6 +96,23 @@ public class EventServiceImpl implements EventService {
         log.info("EventServiceImpl.findAllPendent - end - Event.size {}", events.size());
 
         return toListEventInfoDto(events);
+
+    }
+
+    @Override
+    public void update(final EventRequestDto dto, final Long idEvent, final Long idUser){
+
+        log.info("EventServiceImpl.update - start - EventRequestDto {} - idEvent {} - idUser {}",dto, idEvent, idUser);
+
+        Event event = eventRepository.findById(idEvent)
+                .orElseThrow(() -> new NotFoundException("not found event with id " + idEvent));
+
+        if (!event.getUser().getId().equals(idUser))
+            throw new BussinesException(format("Usuario com o id %s não foi o criador do evento", idUser));
+
+        eventRepository.save(toEventUpdate(dto, event));
+        
+        log.info("EventServiceImpl.update - end ");
 
     }
 }

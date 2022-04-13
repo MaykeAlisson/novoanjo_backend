@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
 
 import static br.com.novoanjo.novoanjo.domain.model.Address.convertToAddress;
 
@@ -41,7 +40,7 @@ public class Event implements Serializable {
     @Column(name = "approved", nullable = false, length = 1, columnDefinition = "text")
     private Approved approved;
 
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -53,7 +52,7 @@ public class Event implements Serializable {
     @Column(name = "data_cadastro", nullable = false, columnDefinition = "datetime")
     private OffsetDateTime dataCadastro;
 
-    public static Event toEvent(final EventRequestDto dto, final User user){
+    public static Event toEvent(final EventRequestDto dto, final User user) {
 
         return Event.builder()
                 .name(dto.getName())
@@ -64,4 +63,16 @@ public class Event implements Serializable {
                 .address(convertToAddress(dto.getAddress()))
                 .build();
     }
+
+    public static Event toEventUpdate(final EventRequestDto dto, Event event) {
+
+        event.setName(dto.getName());
+        event.setDescription(dto.getDescription());
+        event.setData(dto.getData());
+        event.setAddress(convertToAddress(dto.getAddress()));
+        return event;
+
+    }
+
+
 }

@@ -17,4 +17,6 @@ public interface EventService {
     Set<EventInfoDto> findByState(String state);
 
     Set<EventInfoDto> findAllPendent();
+
+    void update(EventRequestDto dto, Long idEvent, Long idUser);
 }

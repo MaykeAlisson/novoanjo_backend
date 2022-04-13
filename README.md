@@ -28,3 +28,12 @@ docker-compose up -d /devops/local_env/
 
     NovoAnjoApi: http://localhost:8080/
     Swagger: http://localhost:8080/swagger-ui.html
+
+### ToDo
+
+* Documentar metodos
+* Colocar msg erro em PT-BR
+* Escreter teste unitario / Integração
+* Configurar Autenticação
+* Configurar Swagger
+* Configurar CI/CD
