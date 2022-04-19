@@ -67,11 +67,11 @@ public class UserController {
 
         log.info("UserController.findByProfile - start - Profile {}", profile);
         if (isBlank(profile)) {
-            throw new BussinesException("profile required!");
+            throw new BussinesException("profile obrigatorio!");
         }
 
         if (FALSE.equals(existValue(profile))) {
-            throw new BussinesException("profile value A or S");
+            throw new BussinesException("profile valores A or S");
         }
 
         if (!Objects.equals(getUserPerfil(), ProfileName.M.getValor())) {
@@ -93,7 +93,7 @@ public class UserController {
 
         log.info("UserController.findByService - start - id {}", id);
         if (Objects.isNull(id)) {
-            throw new BussinesException("id required!");
+            throw new BussinesException("id obrigatorio!");
         }
 
         if (getUserPerfil().contains(ProfileName.S.getValor())) {

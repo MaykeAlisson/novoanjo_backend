@@ -55,7 +55,7 @@ public class EventController {
 
         log.info("EventController.findById - start - idEvent {}", id);
         if (Objects.isNull(id)) {
-            throw new BussinesException("id required!");
+            throw new BussinesException("id obrigatorio!");
         }
 
         final EventInfoDto event = eventService.findById(id);
@@ -91,7 +91,7 @@ public class EventController {
 
         log.info("EventController.findByState - start - State {}", state);
         if (StringUtils.isBlank(state)) {
-            throw new BussinesException("state required!");
+            throw new BussinesException("state obrigatorio!");
         }
 
         final Set<EventInfoDto> eventState = eventService.findByState(state);
@@ -129,7 +129,7 @@ public class EventController {
 
         log.info("EventController.update - start - EventRequestDto {} - idEvent {}", obj, id);
         if (Objects.isNull(id)) {
-            throw new BussinesException("id required!");
+            throw new BussinesException("id obrigatorio!");
         }
 
         eventService.update(obj, id, getUserId());

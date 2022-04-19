@@ -36,23 +36,30 @@ public class EventServiceImpl implements EventService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Event create(final EventRequestDto request, final Long idUser){
 
         log.info("EventServiceImpl.create - start - EventRequestDto {} - idUser {}", request, idUser);
 
         User user = userRepository.findById(idUser)
-                .orElseThrow(() -> new NotFoundException(format("not found user with id %s", idUser)));
+                .orElseThrow(() -> new NotFoundException(format("Não foi encontrado usuario com o id %s", idUser)));
 
         log.info("EventServiceImpl.create - end ");
         return eventRepository.save(toEvent(request, user));
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public EventInfoDto findById(final Long idEvent){
 
         log.info("EventServiceImpl.findById - start - idEvent {}", idEvent);
         final Event event = eventRepository.findById(idEvent)
-                .orElseThrow(() -> new NotFoundException(format("not found event with id %s", idEvent)));
+                .orElseThrow(() -> new NotFoundException(format("Não foi encontrado evento com id %s", idEvent)));
 
         log.info("EventServiceImpl.findById - end - Event {}", event);
         return Objects.equals(event.getApproved(), Approved.S)
@@ -60,6 +67,10 @@ public class EventServiceImpl implements EventService {
                 : null;
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<EventInfoDto> findAllApproved(){
 
@@ -72,6 +83,10 @@ public class EventServiceImpl implements EventService {
         return toListEventInfoDto(events);
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<EventInfoDto> findByState(final String state){
 
@@ -84,6 +99,10 @@ public class EventServiceImpl implements EventService {
         return toListEventInfoDto(events);
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<EventInfoDto> findAllPendent(){
 
@@ -96,13 +115,17 @@ public class EventServiceImpl implements EventService {
         return toListEventInfoDto(events);
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(final EventRequestDto dto, final Long idEvent, final Long idUser){
 
         log.info("EventServiceImpl.update - start - EventRequestDto {} - idEvent {} - idUser {}",dto, idEvent, idUser);
 
         Event event = eventRepository.findById(idEvent)
-                .orElseThrow(() -> new NotFoundException("not found event with id " + idEvent));
+                .orElseThrow(() -> new NotFoundException("Não foi encontrado evento com id " + idEvent));
 
         if (!event.getUser().getId().equals(idUser))
             throw new BussinesException(format("Usuario com o id %s não foi o criador do evento", idUser));
@@ -112,12 +135,16 @@ public class EventServiceImpl implements EventService {
         log.info("EventServiceImpl.update - end ");
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void aprove(final EventApproved ids){
 
         log.info("EventServiceImpl.aprove - start - EventApproved {} ", ids);
         Set<Event> events = ids.getEvents().stream().map(id -> eventRepository.findById(id)
-                        .orElseThrow(() -> new NotFoundException(format("não foi encontrado evento com o id %s", id))))
+                        .orElseThrow(() -> new NotFoundException(format("Não foi encontrado evento com o id %s", id))))
                 .collect(Collectors.toSet());
 
         events.forEach(event -> event.setApproved(Approved.S));
@@ -126,11 +153,15 @@ public class EventServiceImpl implements EventService {
         log.info("EventServiceImpl.aprove - end ");
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteById(final Long id, final Long idUser){
 
         Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("não foi localizado evento com o id " + id));
+                .orElseThrow(() -> new NotFoundException("Não foi localizado evento com o id " + id));
 
         if(!event.getUser().getId().equals(idUser))
             throw new BussinesException(format("Este evento não foi criado pelo usuario com id %s", idUser));

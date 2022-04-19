@@ -31,8 +31,6 @@ docker-compose up -d /devops/local_env/
 
 ### ToDo
 
-* Documentar metodos
-* Colocar msg erro em PT-BR
 * Escreter teste unitario / Integração
 * Criar exchedule eventos pendentes alerta master
 * Configurar Autenticação

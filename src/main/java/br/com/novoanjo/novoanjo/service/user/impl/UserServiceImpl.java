@@ -37,6 +37,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ServiceRepository serviceRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UserAccessDto createUser(final UserRequestDto userRequest) {
 
@@ -45,7 +48,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NotFoundException(format("not found profile with name %s", userRequest.getProfileName().getValor())));
 
         if (userRepository.findByEmail(userRequest.getEmail()).isPresent())
-            throw new BussinesException(format("user with already registered email %s ", userRequest.getEmail()));
+            throw new BussinesException(format("Usuario com email %s já cadastrado!", userRequest.getEmail()));
 
         final User user = userRepository.save(convertToUser(userRequest, profile));
 
@@ -61,12 +64,15 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateUser(final UserRequestUpdateDto userRequestUpdate, final Long id) {
 
         log.info("UserServiceImpl.updateUser - start - UserRequestUpdateDto {} - id {}", userRequestUpdate, id);
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(format("not found user with id %s", id)));
+                .orElseThrow(() -> new NotFoundException(format("Não foi encontrado usuario com id %s", id)));
 
         userRepository.save(convertToUser(userRequestUpdate, user));
 
@@ -74,28 +80,37 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<UserInfoDto> findAllByProfile(final ProfileName profileName) {
 
         log.info("UserServiceImpl.findAllByProfile - start - ProfileName {}", profileName);
         final Profile profile = profileRepository.findByProfileName(profileName)
-                .orElseThrow(() -> new NotFoundException(format("not found profile with name %s", profileName.getValor())));
+                .orElseThrow(() -> new NotFoundException(format("Não foi encontrado perfil com o nome %s", profileName.getValor())));
 
         log.info("UserServiceImpl.findAllByProfile - end ");
         return toUserInfoDto(userRepository.findByProfile(profile));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<UserInfoDto> findAllByService(final Long idService) {
 
         log.info("UserServiceImpl.findAllByService - start - idService {}", idService);
         final ServiceModel service = serviceRepository.findById(idService)
-                .orElseThrow(() -> new NotFoundException(format("not found service with id %s", idService)));
+                .orElseThrow(() -> new NotFoundException(format("Não foi encontrado service com id %s", idService)));
 
         log.info("UserServiceImpl.findAllByService - end");
         return toUserInfoDto(userRepository.findServiceAndProfileNotS(service.getId()));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void userToService(final UserToServiceDto userToService, final Long idUser) {
 
@@ -103,11 +118,11 @@ public class UserServiceImpl implements UserService {
         Set<ServiceModel> services = userToService.getServices()
                 .stream()
                 .map(idService -> serviceRepository.findById(idService)
-                        .orElseThrow(() -> new NotFoundException(format("not found service with id %s", idService))))
+                        .orElseThrow(() -> new NotFoundException(format("Não foi encontrado service com id %s", idService))))
                 .collect(Collectors.toSet());
 
         User user = userRepository.findById(idUser)
-                .orElseThrow(() -> new NotFoundException(format("not found user with id %s", idUser)));
+                .orElseThrow(() -> new NotFoundException(format("Não foi encontrado usuario com id %s", idUser)));
 
         services.forEach(user::addService);
 
@@ -116,6 +131,9 @@ public class UserServiceImpl implements UserService {
         log.info("UserServiceImpl.userToService - end ");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void userRemoveService(final UserToServiceDto userToService, final Long idUser) {
 
@@ -123,11 +141,11 @@ public class UserServiceImpl implements UserService {
         Set<ServiceModel> services = userToService.getServices()
                 .stream()
                 .map(idService -> serviceRepository.findById(idService)
-                        .orElseThrow(() -> new NotFoundException(format("not found service with id %s", idService))))
+                        .orElseThrow(() -> new NotFoundException(format("Não foi encontrado service com id %s", idService))))
                 .collect(Collectors.toSet());
 
         User user = userRepository.findById(idUser)
-                .orElseThrow(() -> new NotFoundException(format("not found user with id %s", idUser)));
+                .orElseThrow(() -> new NotFoundException(format("Não foi encontrado usuario com id %s", idUser)));
 
         services.forEach(user::removeService);
 
@@ -136,12 +154,15 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<UserInfoDto> userDiscoverService(final Long idUser) {
 
         log.info("UserServiceImpl.userDiscoverService - start - idUser {}", idUser);
         final User user = userRepository.findById(idUser)
-                .orElseThrow(() -> new NotFoundException(format("not found user with id %s", idUser)));
+                .orElseThrow(() -> new NotFoundException(format("Não foi encontrado usuario com id %s", idUser)));
 
         final String city = user.getAddress().getCity();
         final String state = user.getAddress().getState();
