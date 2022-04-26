@@ -5,6 +5,8 @@ import br.com.novoanjo.novoanjo.domain.commons.dto.UserAccessDto;
 import br.com.novoanjo.novoanjo.repository.ProfileRepository;
 import br.com.novoanjo.novoanjo.repository.UserRepository;
 import br.com.novoanjo.novoanjo.service.user.UserService;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,11 @@ class UserServiceTest extends BaseTest {
     void cadastrarUsuarioSucess() throws IOException {
 
         UserAccessDto user = userService.createUser(getUserRequestSuccess());
+        Assertions.assertNotNull(user);
+        Assertions.assertNotNull(user.getId());
+        Assertions.assertNotNull(user.getName());
+        Assertions.assertNotNull(user.getProfile());
+        Assertions.assertNotNull(user.getToken());
 
 //        Assertions.assertNotNull(insert);
     }
