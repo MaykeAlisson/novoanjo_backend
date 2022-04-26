@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: novoanjo
+    time-zone: America/Sao_Paulo
+  security:
+    enabled: false
+  datasource:
+    url: jdbc:h2:mem:testdb;
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+    initialization-mode: always
+    platform: h2
+  jpa:
+    show-sql: false
+    format-sql: false
+    open-in-view: false

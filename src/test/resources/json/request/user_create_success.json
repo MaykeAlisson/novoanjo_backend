@@ -1,0 +1,19 @@
+{
+  "name": "Luana",
+  "birth": "1991-11-04",
+  "email": "luana@gmail.com",
+  "password": "123456",
+  "profileName": "A",
+  "phone": {
+    "ddd": 34,
+    "number": 22344985
+  },
+  "address": {
+    "zipCode": "38414356",
+    "logradouro": "Rua",
+    "complement": "",
+    "number": 233,
+    "city": "Uberaba",
+    "state": "SP"
+  }
+}

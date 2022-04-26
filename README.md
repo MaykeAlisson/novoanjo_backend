@@ -31,7 +31,10 @@ docker-compose up -d /devops/local_env/
 
 ### ToDo
 
-* Escreter teste unitario / Integração
+* Escrever teste unitario / Integração
+    . Configurar banco h2 
+    . criar tabelas
+    . Criar script inicial DB
 * Criar exchedule eventos pendentes alerta master
 * Configurar Autenticação
 * Configurar Swagger
