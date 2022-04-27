@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
         log.info("UserServiceImpl.createUser - start - UserRequestDto {}", userRequest);
         final Profile profile = profileRepository.findByProfileName(userRequest.getProfileName())
-                .orElseThrow(() -> new NotFoundException(format("not found profile with name %s", userRequest.getProfileName().getValor())));
+                .orElseThrow(() -> new NotFoundException(format("Não foi encontrado perfil com o nome %s", userRequest.getProfileName().getValor())));
 
         if (userRepository.findByEmail(userRequest.getEmail()).isPresent())
             throw new BussinesException(format("Usuario com email %s já cadastrado!", userRequest.getEmail()));

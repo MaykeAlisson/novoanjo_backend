@@ -36,7 +36,6 @@ class UserServiceTest extends BaseTest {
         Assertions.assertNotNull(user.getProfile());
         Assertions.assertNotNull(user.getToken());
 
-//        Assertions.assertNotNull(insert);
     }
 
     @Test
