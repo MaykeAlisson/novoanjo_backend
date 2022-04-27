@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 
 public abstract class BaseTest {
 
-    protected static final String JSON_USER_REQUEST_SUCCESS = "json/user_create_success.json";
+    protected static final String JSON_USER_REQUEST_SUCCESS = "json/request/user_create_success.json";
 
     @Autowired
     private ObjectMapper objectMapper;

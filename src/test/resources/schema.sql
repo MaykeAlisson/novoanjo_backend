@@ -3,14 +3,14 @@ id BIGINT NOT NULL AUTO_INCREMENT,
 name CHAR(1) UNIQUE NOT NULL,
 
   primary key (id)
-) engine=innodb default charset=utf8;
+);
 
 CREATE TABLE service (
 id BIGINT NOT NULL AUTO_INCREMENT,
 description VARCHAR(100) NOT NULL,
 
   primary key (id)
-) engine=innodb default charset=utf8;
+);
 
 CREATE TABLE address (
 id BIGINT NOT NULL AUTO_INCREMENT,
@@ -21,7 +21,7 @@ number BIGINT NOT NULL,
 state VARCHAR(2) NOT NULL,
 
   primary key (id)
-) engine=innodb default charset=utf8;
+);
 
 
 CREATE TABLE phone (
@@ -30,7 +30,7 @@ ddd CHAR(3) NOT NULL,
 number VARCHAR(10) NOT NULL,
 
   primary key (id)
-) engine=innodb default charset=utf8;
+);
 
 CREATE TABLE user (
 id BIGINT NOT NULL AUTO_INCREMENT,
@@ -44,7 +44,7 @@ address_id BIGINT,
 phone_id BIGINT,
 
   primary key (id)
-) engine=innodb default charset=utf8;
+) ;
 
 ALTER TABLE user ADD CONSTRAINT profile_id_fk FOREIGN KEY (profile_id) REFERENCES profile (id);
 ALTER TABLE user ADD CONSTRAINT address_id_user_fk FOREIGN KEY (address_id) REFERENCES address (id);
@@ -55,7 +55,7 @@ create table user_service (
 	service_id BIGINT NOT NULL,
 
 	primary key (user_id, service_id)
-) engine=InnoDB default charset=utf8;
+);
 
 CREATE TABLE event (
 id BIGINT NOT NULL AUTO_INCREMENT,
@@ -68,7 +68,7 @@ user_id BIGINT NOT NULL,
 address_id BIGINT,
 
   primary key (id)
-) engine=innodb default charset=utf8;
+);
 
 
 ALTER TABLE event ADD CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES user (id);

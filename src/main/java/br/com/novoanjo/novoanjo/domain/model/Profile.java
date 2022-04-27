@@ -22,6 +22,6 @@ public class Profile implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "name", nullable = false, unique = true, columnDefinition = "text")
+    @Column(name = "name", nullable = false, length = 1, unique = true)
     private ProfileName profileName;
 }
