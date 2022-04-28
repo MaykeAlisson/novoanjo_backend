@@ -1,6 +1,8 @@
 package br.com.novoanjo.novoanjo;
 
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestDto;
+import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestUpdateDto;
+import br.com.novoanjo.novoanjo.domain.commons.dto.UserToServiceDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -14,6 +16,10 @@ import java.nio.charset.StandardCharsets;
 public abstract class BaseTest {
 
     protected static final String JSON_USER_REQUEST_SUCCESS = "json/request/user_create_success.json";
+    protected static final String JSON_USER_REQUEST_UPDATE = "json/request/user_update_success.json";
+    protected static final String JSON_USER_SERVICE_REQUEST = "json/request/user_service_success.json";
+
+    protected static final String JSON_USER_SERVICE_REMOVE_REQUEST = "json/request/user_service_delete.json";
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -25,8 +31,20 @@ public abstract class BaseTest {
         return readValue;
     }
 
-
     protected UserRequestDto getUserRequestSuccess() throws IOException {
         return readJsonAndParse(JSON_USER_REQUEST_SUCCESS, UserRequestDto.class);
     }
+
+    protected UserRequestUpdateDto getUserRequestUpdateDto() throws IOException {
+        return readJsonAndParse(JSON_USER_REQUEST_UPDATE, UserRequestUpdateDto.class);
+    }
+
+    protected UserToServiceDto getUserToServiceDto() throws IOException {
+        return readJsonAndParse(JSON_USER_SERVICE_REQUEST, UserToServiceDto.class);
+    }
+
+    protected UserToServiceDto getUserToServiceDelete() throws IOException {
+        return readJsonAndParse(JSON_USER_SERVICE_REMOVE_REQUEST, UserToServiceDto.class);
+    }
+
 }

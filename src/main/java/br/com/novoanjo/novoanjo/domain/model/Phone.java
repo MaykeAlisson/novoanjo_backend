@@ -27,7 +27,6 @@ public class Phone implements Serializable {
     @Column(name = "number", nullable = false)
     private Long number;
 
-
     public static Phone convertToPhone(final PhoneRequestDto phoneRequest){
         return Phone.builder()
                 .ddd(phoneRequest.getDdd())
