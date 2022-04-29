@@ -6,6 +6,8 @@ import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestUpdateDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserToServiceDto;
 import br.com.novoanjo.novoanjo.domain.model.*;
+import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
+import br.com.novoanjo.novoanjo.infra.util.jwt.Token;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +27,14 @@ import java.util.Collections;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class BaseTest {
 
+    protected static final String TOKEN_A = Token.gerar(1L, "A")
+            .orElseThrow(() -> new BussinesException("Erro ao Gerar token!"));
+
+    protected static final String TOKEN_S = Token.gerar(1L, "S")
+            .orElseThrow(() -> new BussinesException("Erro ao Gerar token!"));
+
+    protected static final String TOKEN_M = Token.gerar(1L, "S")
+            .orElseThrow(() -> new BussinesException("Erro ao Gerar token!"));
 
     protected static final String URL_USER = "/api/user/v1/user";
     protected static final String URL_USER_BUSCA_POR_PROFILE = "/api/user/v1/user/profile";
