@@ -26,9 +26,6 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserServiceTest extends BaseTest {
@@ -40,8 +37,6 @@ class UserServiceTest extends BaseTest {
     private ProfileRepository profileRepository;
     @Autowired
     private UserRepository userRepository;
-    @Captor
-    private ArgumentCaptor<User> userCaptor;
 
     @Test
     @Order(1)
@@ -123,32 +118,5 @@ class UserServiceTest extends BaseTest {
         Assertions.assertFalse(idServices.containsAll(ids));
     }
 
-    private User getUser(Long id) {
-        Address address = Address.builder()
-                .id(1L)
-                .city("Teste Cidade")
-                .state("SP")
-                .number(12L)
-                .logradouro("Rua Teste")
-                .zipCode("111111")
-                .build();
-
-        ServiceModel service = ServiceModel.builder()
-                .serviceName("Service1")
-                .build();
-
-        Phone phone = Phone.builder()
-                .ddd((short) 34)
-                .number(1234556L)
-                .build();
-
-        return User.builder()
-                .id(id)
-                .name("Teste")
-                .address(address)
-                .services(Collections.singleton(service))
-                .phone(phone)
-                .build();
-    }
 
 }

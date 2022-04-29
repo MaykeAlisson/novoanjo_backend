@@ -1,0 +1,13 @@
+{
+  "name": "Novos Anjos 5",
+  "description": "Evento que busca criar novos anjos",
+  "data": "2022-06-03T10:15:30",
+  "address": {
+    "zipCode": "38414356",
+    "logradouro": "Rua",
+    "complement": "",
+    "number": 233,
+    "city": "Uberaba",
+    "state": "SP"
+  }
+}
