@@ -7,18 +7,30 @@ import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestUpdateDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserToServiceDto;
 import br.com.novoanjo.novoanjo.domain.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
+@AutoConfigureMockMvc
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class BaseTest {
+
+
+    protected static final String URL_USER = "/api/user/v1/user";
+    protected static final String URL_USER_BUSCA_POR_PROFILE = "/api/user/v1/user/profile";
+    protected static final String URL_USER_BUSCAR_POR_ID_SERVICE = "/api/user/v1/user/service";
+    protected static final String URL_USER_SERVICE_DISCOVERY = "/api/user/v1/user/discovery";
+    protected static final String URL_USER_SERVICE = "/api/user/v1/user/service";
 
     protected static final String JSON_USER_REQUEST_SUCCESS = "json/request/user_create_success.json";
     protected static final String JSON_USER_REQUEST_UPDATE = "json/request/user_update_success.json";
@@ -36,6 +48,16 @@ public abstract class BaseTest {
         Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
         T readValue = objectMapper.readValue(reader, clazz);
         return readValue;
+    }
+
+    public static String readStringFromFile(String path) {
+        try {
+            File file = new ClassPathResource(path).getFile();
+            return FileUtils.readFileToString(file, StandardCharsets.UTF_8.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 
     protected UserRequestDto getUserRequestSuccess() throws IOException {

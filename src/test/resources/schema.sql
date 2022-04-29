@@ -1,3 +1,11 @@
+drop table if exists address CASCADE;
+drop table if exists event CASCADE;
+drop table if exists phone CASCADE;
+drop table if exists profile CASCADE;
+drop table if exists service CASCADE;
+drop table if exists user CASCADE;
+drop table if exists user_service CASCADE;
+
 CREATE TABLE profile (
 id BIGINT NOT NULL AUTO_INCREMENT,
 name CHAR(1) UNIQUE NOT NULL,

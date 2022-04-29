@@ -36,4 +36,5 @@ docker-compose up -d /devops/local_env/
 * Mudar valores para Variavel de ambiente
 * Configurar Autenticação
 * Configurar Swagger
+* Configurar Monitoramento
 * Configurar CI/CD GitHub
