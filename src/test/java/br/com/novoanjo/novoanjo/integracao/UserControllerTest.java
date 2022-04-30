@@ -76,4 +76,32 @@ class UserControllerTest extends BaseTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
 
     }
+
+    @Test
+    void buscarUsuarioPorPerfilErroPosUsuarioNaoTemPerfilMaster() throws Exception {
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(format("%s/A", URL_USER_BUSCA_POR_PROFILE))
+                .header(HttpHeaders.AUTHORIZATION, format("Bearer %s", TOKEN_S))
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
+
+    }
+
+    @Test
+    void buscarUsuarioPorServiceIdErroPosUsuarioNaoTemPerfilMaster() throws Exception {
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(format("%s/1", URL_USER_BUSCAR_POR_ID_SERVICE))
+                .header(HttpHeaders.AUTHORIZATION, format("Bearer %s", TOKEN_S))
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
+
+    }
 }
