@@ -31,11 +31,11 @@ docker-compose up -d /devops/local_env/
 
 ### ToDo
 
-* Criar exchedule eventos pendentes alerta master
-* Mudar valores para Variavel de ambiente
 * Configurar Autenticação
 * Configurar Swagger
 * Configurar Monitoramento
 * Configurar ToDo github 
   . Criar coluna usuario email validado
+  . Enviar email evento pendente
+  . Criar version Jpa
   . Configurar CI/CD GitHub

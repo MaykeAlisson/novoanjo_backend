@@ -1,14 +1,17 @@
 package br.com.novoanjo.novoanjo.service.event.impl;
 
 import br.com.novoanjo.novoanjo.domain.commons.constante.Approved;
+import br.com.novoanjo.novoanjo.domain.commons.constante.ProfileName;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventApproved;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventRequestDto;
 import br.com.novoanjo.novoanjo.domain.model.Event;
+import br.com.novoanjo.novoanjo.domain.model.Profile;
 import br.com.novoanjo.novoanjo.domain.model.User;
 import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
 import br.com.novoanjo.novoanjo.infra.exception.NotFoundException;
 import br.com.novoanjo.novoanjo.repository.EventRepository;
+import br.com.novoanjo.novoanjo.repository.ProfileRepository;
 import br.com.novoanjo.novoanjo.repository.UserRepository;
 import br.com.novoanjo.novoanjo.service.event.EventService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +38,9 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ProfileRepository profileRepository;
 
     /**
      * {@inheritDoc}
@@ -160,6 +166,8 @@ public class EventServiceImpl implements EventService {
     @Override
     public void deleteById(final Long id, final Long idUser){
 
+        log.info("EventServiceImpl.deleteById - start - idEvent {} - idUser {}",id, idUser);
+
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Não foi localizado evento com o id " + id));
 
@@ -168,5 +176,53 @@ public class EventServiceImpl implements EventService {
 
         eventRepository.delete(event);
 
+        log.info("EventServiceImpl.deleteById - end ");
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void verificaEventosPendente(){
+
+        log.info("EventServiceImpl.verificaEventosPendente - start ");
+
+        Set<Event> events = eventRepository.findByApprovedAndDataAfter(Approved.N, LocalDateTime.now());
+
+        if (events.isEmpty()) return;
+
+        final Profile profile = profileRepository.findByProfileName(ProfileName.M)
+                .orElseThrow(() -> new NotFoundException(format("Não foi encontrado perfil com o nome %s", ProfileName.M)));
+        Set<User> users = userRepository.findByProfile(profile);
+
+        users.forEach(user -> mandarEmailEventoPendente(user, events));
+
+        log.info("EventServiceImpl.verificaEventosPendente - end ");
+    }
+
+    private void mandarEmailEventoPendente(final User user, final Set<Event> events){
+
+        final String email = user.getEmail();
+
+        final String corpoEmail = criarCorpoEmail(user.getName(), events);
+
+        System.out.println(format("Enviando email para %s - corpo %s", email, corpoEmail));
+
+    }
+
+    private String criarCorpoEmail(final String destinatario, final Set<Event> events){
+       StringBuffer corpo = new StringBuffer();
+        corpo.append(format("Olá Anjo %s \n", destinatario));
+        corpo.append(format("existe um total de %s eventos pendentes de aprovação, segue os eventos abaixo. \n", events.size()));
+
+        events.forEach(event -> {
+            corpo.append(format("Nome: %s \n", event.getName()));
+            corpo.append(format("Descrição: %s \n", event.getDescription()));
+            corpo.append(format("Data: %s \n", event.getData()));
+            corpo.append(format("Data-Cadastro: %s \n", event.getDataCadastro()));
+        });
+
+        return String.valueOf(corpo);
     }
 }

@@ -87,4 +87,12 @@ public interface EventService {
      * @param id id evento no banco
      */
     void deleteById(Long id, Long idUser);
+
+    /**
+     * Buscar eventos pendente de aprovacao
+     *
+     * <p>Autor: Mayke</p>
+     *
+     */
+    void verificaEventosPendente();
 }
