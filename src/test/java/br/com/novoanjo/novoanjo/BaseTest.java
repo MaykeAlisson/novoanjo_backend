@@ -40,6 +40,8 @@ public abstract class BaseTest {
     protected static final String URL_USER_BUSCA_POR_PROFILE = "/api/user/v1/user/profile";
     protected static final String URL_USER_BUSCAR_POR_ID_SERVICE = "/api/user/v1/user/service";
 
+    protected static final String URL_EVENT = "/api/event/v1/event";
+
     protected static final String JSON_USER_REQUEST_SUCCESS = "json/request/user_create_success.json";
     protected static final String JSON_USER_REQUEST_UPDATE = "json/request/user_update_success.json";
     protected static final String JSON_USER_SERVICE_REQUEST = "json/request/user_service_success.json";
