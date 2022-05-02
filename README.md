@@ -31,10 +31,11 @@ docker-compose up -d /devops/local_env/
 
 ### ToDo
 
-* Escrever teste unitario / Integração
 * Criar exchedule eventos pendentes alerta master
 * Mudar valores para Variavel de ambiente
 * Configurar Autenticação
 * Configurar Swagger
 * Configurar Monitoramento
-* Configurar CI/CD GitHub
+* Configurar ToDo github 
+  . Criar coluna usuario email validado
+  . Configurar CI/CD GitHub

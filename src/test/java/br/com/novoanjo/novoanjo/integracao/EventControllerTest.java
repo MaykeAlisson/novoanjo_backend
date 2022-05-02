@@ -66,10 +66,36 @@ public class EventControllerTest extends BaseTest {
     }
 
     @Test
-    void buscarEventosPendentesErroPosUsuarioNaoTemPerfilMaster() throws Exception {}
+    void buscarEventosPendentesErroPosUsuarioNaoTemPerfilMaster() throws Exception {
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(URL_EVENT_PENDENTES)
+                .header(HttpHeaders.AUTHORIZATION, format("Bearer %s", TOKEN_S))
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
+
+    }
 
     @Test
-    void aprovarEventosPendentesErroPosUsuarioNaoTemPerfilMaster() throws Exception {}
+    void aprovarEventosPendentesErroPosUsuarioNaoTemPerfilMaster() throws Exception {
+
+        String body = readStringFromFile(JSON_EVENT_APROVE_REQUEST);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(URL_EVENT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, format("Bearer %s", TOKEN_S))
+                .accept(MediaType.APPLICATION_JSON)
+                .content(body);
+
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
+
+    }
 
 
 }
