@@ -1,8 +1,8 @@
 package br.com.novoanjo.novoanjo.controller;
 
+import br.com.novoanjo.novoanjo.config.exception.BussinesException;
 import br.com.novoanjo.novoanjo.domain.commons.constante.ProfileName;
 import br.com.novoanjo.novoanjo.domain.commons.dto.*;
-import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
 import br.com.novoanjo.novoanjo.service.user.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +16,9 @@ import java.net.URI;
 import java.util.Objects;
 import java.util.Set;
 
+import static br.com.novoanjo.novoanjo.config.jwt.Token.getUserId;
+import static br.com.novoanjo.novoanjo.config.jwt.Token.getUserPerfil;
 import static br.com.novoanjo.novoanjo.domain.commons.constante.ProfileName.existValue;
-import static br.com.novoanjo.novoanjo.infra.util.jwt.Token.getUserId;
-import static br.com.novoanjo.novoanjo.infra.util.jwt.Token.getUserPerfil;
 import static java.lang.Boolean.FALSE;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 

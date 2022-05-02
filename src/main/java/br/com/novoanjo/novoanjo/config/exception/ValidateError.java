@@ -1,4 +1,4 @@
-package br.com.novoanjo.novoanjo.infra.exception;
+package br.com.novoanjo.novoanjo.config.exception;
 
 public class ValidateError {
 

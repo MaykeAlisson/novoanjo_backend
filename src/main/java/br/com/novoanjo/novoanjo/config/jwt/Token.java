@@ -1,7 +1,7 @@
-package br.com.novoanjo.novoanjo.infra.util.jwt;
+package br.com.novoanjo.novoanjo.config.jwt;
 
 import br.com.novoanjo.novoanjo.infra.util.UtilDate;
-import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
+import br.com.novoanjo.novoanjo.config.exception.BussinesException;
 import io.jsonwebtoken.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -100,14 +100,14 @@ public class Token implements Serializable {
         }
     }
 
-    public static String getUserId(final String token) {
+    public static Long getUserId(final String token) {
         try {
             String subject = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
             if (StringUtils.isBlank(subject)) {
                 throw new BussinesException("Não foi possivei recuperar informações do token!");
             }
             String[] decode = subject.split(";");
-            return String.valueOf(decode[0]);
+            return Long.valueOf(decode[0]);
         } catch (Exception e) {
             throw new BussinesException("Não foi possivei recuperar informações do token! " + e.getMessage());
         }

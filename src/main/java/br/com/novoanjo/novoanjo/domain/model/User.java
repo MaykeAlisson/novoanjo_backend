@@ -4,11 +4,14 @@ import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestUpdateDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,7 +26,7 @@ import static java.util.Objects.requireNonNullElse;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 
     @EqualsAndHashCode.Include
     @Id
@@ -97,5 +100,39 @@ public class User implements Serializable {
         user.address.setState(requireNonNullElse(userRequest.getState(), user.address.getState()));
 
         return user;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

@@ -1,13 +1,13 @@
 package br.com.novoanjo.novoanjo.service.user.impl;
 
+import br.com.novoanjo.novoanjo.config.exception.BussinesException;
+import br.com.novoanjo.novoanjo.config.exception.NotFoundException;
+import br.com.novoanjo.novoanjo.config.jwt.Token;
 import br.com.novoanjo.novoanjo.domain.commons.constante.ProfileName;
 import br.com.novoanjo.novoanjo.domain.commons.dto.*;
 import br.com.novoanjo.novoanjo.domain.model.Profile;
 import br.com.novoanjo.novoanjo.domain.model.ServiceModel;
 import br.com.novoanjo.novoanjo.domain.model.User;
-import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
-import br.com.novoanjo.novoanjo.infra.exception.NotFoundException;
-import br.com.novoanjo.novoanjo.infra.util.jwt.Token;
 import br.com.novoanjo.novoanjo.repository.ProfileRepository;
 import br.com.novoanjo.novoanjo.repository.ServiceRepository;
 import br.com.novoanjo.novoanjo.repository.UserRepository;

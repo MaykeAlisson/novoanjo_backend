@@ -5,24 +5,19 @@ import br.com.novoanjo.novoanjo.domain.commons.dto.UserAccessDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestUpdateDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserToServiceDto;
-import br.com.novoanjo.novoanjo.domain.model.Address;
-import br.com.novoanjo.novoanjo.domain.model.Phone;
 import br.com.novoanjo.novoanjo.domain.model.ServiceModel;
 import br.com.novoanjo.novoanjo.domain.model.User;
-import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
+import br.com.novoanjo.novoanjo.config.exception.BussinesException;
 import br.com.novoanjo.novoanjo.repository.ProfileRepository;
 import br.com.novoanjo.novoanjo.repository.UserRepository;
 import br.com.novoanjo.novoanjo.service.user.UserService;
 import org.junit.jupiter.api.*;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 

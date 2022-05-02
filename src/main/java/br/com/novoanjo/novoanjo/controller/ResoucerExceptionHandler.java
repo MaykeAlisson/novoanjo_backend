@@ -1,9 +1,9 @@
 package br.com.novoanjo.novoanjo.controller;
 
-import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
-import br.com.novoanjo.novoanjo.infra.exception.NotFoundException;
-import br.com.novoanjo.novoanjo.infra.exception.StandardError;
-import br.com.novoanjo.novoanjo.infra.exception.ValidateError;
+import br.com.novoanjo.novoanjo.config.exception.BussinesException;
+import br.com.novoanjo.novoanjo.config.exception.NotFoundException;
+import br.com.novoanjo.novoanjo.config.exception.StandardError;
+import br.com.novoanjo.novoanjo.config.exception.ValidateError;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

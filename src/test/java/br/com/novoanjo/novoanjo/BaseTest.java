@@ -1,13 +1,13 @@
 package br.com.novoanjo.novoanjo;
 
+import br.com.novoanjo.novoanjo.config.jwt.Token;
 import br.com.novoanjo.novoanjo.domain.commons.constante.Approved;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventRequestDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserRequestUpdateDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.UserToServiceDto;
 import br.com.novoanjo.novoanjo.domain.model.*;
-import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
-import br.com.novoanjo.novoanjo.infra.util.jwt.Token;
+import br.com.novoanjo.novoanjo.config.exception.BussinesException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.extension.ExtendWith;

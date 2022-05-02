@@ -5,7 +5,7 @@ import br.com.novoanjo.novoanjo.domain.commons.dto.EventApproved;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventInfoDto;
 import br.com.novoanjo.novoanjo.domain.commons.dto.EventRequestDto;
 import br.com.novoanjo.novoanjo.domain.model.Event;
-import br.com.novoanjo.novoanjo.infra.exception.BussinesException;
+import br.com.novoanjo.novoanjo.config.exception.BussinesException;
 import br.com.novoanjo.novoanjo.service.event.EventService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +20,8 @@ import java.net.URI;
 import java.util.Objects;
 import java.util.Set;
 
-import static br.com.novoanjo.novoanjo.infra.util.jwt.Token.getUserId;
-import static br.com.novoanjo.novoanjo.infra.util.jwt.Token.getUserPerfil;
+import static br.com.novoanjo.novoanjo.config.jwt.Token.getUserId;
+import static br.com.novoanjo.novoanjo.config.jwt.Token.getUserPerfil;
 
 @Slf4j
 @RestController
