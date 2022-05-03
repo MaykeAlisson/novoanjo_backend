@@ -11,6 +11,9 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     format-sql: false
     open-in-view: false
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 service:
   scheduler:

@@ -31,10 +31,11 @@ docker-compose up -d /devops/local_env/
 
 ### ToDo
 
-* Configurar Swagger
 * Configurar Monitoramento
 * Configurar ToDo github 
   . Criar coluna usuario email validado
   . Enviar email evento pendente
   . Criar version Jpa
+  . Atualizar Libs
+  . Ajustar schedule para 1x no dia as 07:00
   . Configurar CI/CD GitHub
