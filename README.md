@@ -31,7 +31,6 @@ docker-compose up -d /devops/local_env/
 
 ### ToDo
 
-* Configurar Autenticação
 * Configurar Swagger
 * Configurar Monitoramento
 * Configurar ToDo github 

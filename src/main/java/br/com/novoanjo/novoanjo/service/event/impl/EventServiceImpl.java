@@ -221,6 +221,7 @@ public class EventServiceImpl implements EventService {
             corpo.append(format("Descrição: %s \n", event.getDescription()));
             corpo.append(format("Data: %s \n", event.getData()));
             corpo.append(format("Data-Cadastro: %s \n", event.getDataCadastro()));
+            corpo.append("\n");
         });
 
         return String.valueOf(corpo);

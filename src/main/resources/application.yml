@@ -16,3 +16,7 @@ service:
   scheduler:
     cron: "0 0/10 * * * *"
     time-zone: America/Sao_Paulo
+
+DB_HOST: localhost:3306
+DB_USER : root
+DB_PASSWORD : jesus

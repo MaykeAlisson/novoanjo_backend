@@ -17,6 +17,7 @@ import java.util.Set;
 
 import static br.com.novoanjo.novoanjo.domain.model.Address.convertToAddress;
 import static br.com.novoanjo.novoanjo.domain.model.Phone.convertToPhone;
+import static br.com.novoanjo.novoanjo.infra.util.UtilCrypto.encriptar;
 import static java.util.Objects.requireNonNullElse;
 
 @Data
@@ -81,8 +82,7 @@ public class User implements Serializable, UserDetails {
                 .name(userRequest.getName())
                 .birth(userRequest.getBirth())
                 .email(userRequest.getEmail())
-//                .password(encriptar(userRequest.getPassword()))
-                .password(userRequest.getPassword())
+                .password(encriptar(userRequest.getPassword()))
                 .profile(profile)
                 .phone(convertToPhone(userRequest.getPhone()))
                 .address(convertToAddress(userRequest.getAddress()))
